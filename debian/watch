@@ -1,0 +1,3 @@
+version=3
+opts="uversionmangle=s/^\/v//" \
+http://githubredir.debian.net/github/umlaeute/v4l2loopback (.*).tar.gz

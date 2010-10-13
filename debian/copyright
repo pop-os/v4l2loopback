@@ -1,0 +1,44 @@
+This work was packaged for Debian by:
+
+    IOhannes m zmoelnig (gpg-key at iem) <zmoelnig@iem.at> on Mon, 27 Sep 2010 18:55:59 +0200
+
+It was downloaded from:
+
+    http://github.com/umlaeute/v4l2loopback
+
+Upstream Author(s):
+
+    IOhannes m zmoelnig <zmoelnig@iem.at>
+
+Copyright:
+
+    Copyright (c) 2010 IOhannes m zmoelnig <zmoelnig@iem.at>
+    Copyright (c) 2010 Scott Maines <smaines@alaya.com>
+    Copyright (c) 2009 Gorinich Zmey
+    Copyright (c) 2009 Vasily Levin
+
+
+License:
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 2 of the License, or
+    (at your option) any later version.
+
+    This package is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+On Debian systems, the complete text of the GNU General Public License version 2
+can be found in "/usr/share/common-licenses/GPL-2".
+
+The Debian packaging is:
+
+    Copyright (C) 2008 Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+    Copyright (C) 2010 IOhannes m zmoelnig (gpg-key at iem) <zmoelnig@iem.at>
+    and is licensed under the GPL version 2, see above.
+

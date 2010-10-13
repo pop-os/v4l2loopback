@@ -1,0 +1,41 @@
+#!/usr/bin/make -f
+# -*- mode: makefile; coding: utf-8 -*-
+# Copyright © 2008 Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+# Copyright © 2010 IOhannes m zmölnig <zmoelnig@iem.at>
+# Description: Main Debian packaging script for v4l2loopback-sorce
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as
+# published by the Free Software Foundation; either version 2, or (at
+# your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+install/v4l2loopback-source::
+
+	# install source code and create directory
+	install -D -m 0755  Makefile \
+		debian/tmp/modules/v4l2loopback/Makefile
+	install -m 0644  v4l2loopback.c \
+		debian/tmp/modules/v4l2loopback/
+
+	# Enforce executable bit on debian/rules, and create directory
+	# structure for modules source
+	install -D -m 0755 debian/rules.modules \
+		debian/tmp/modules/v4l2loopback/debian/rules
+	# Prepare the other debian stuff
+	for f in *.modules.in control compat copyright changelog README.Debian; do \
+		install -m 0644 debian/$$f \
+			debian/tmp/modules/v4l2loopback/debian/; \
+	done
+	# Prepare the debian source tarball
+	tar jcf debian/v4l2loopback-source/usr/src/v4l2loopback.tar.bz2 \
+		-C debian/tmp modules
