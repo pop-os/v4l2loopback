@@ -11,6 +11,10 @@ Copyright: 2005-2009, Vasily Levin
  2010-2011, IOhannes m zmoelnig <zmoelnig@iem.at>
 License: GPL-2+
 
+Files: examples/yuv4mpeg_to_v4l2.c
+Copyright: 2011, Eric C. Cooper <ecc@cmu.edu>
+License: GPL-2+
+
 Files: doc/v4l2.html
 Copyright: 1999-2008, Bill Dirks, Michael H. Schimek
  1999-2008, Hans Verkuil and Martin Rubli

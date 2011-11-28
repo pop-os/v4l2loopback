@@ -2,16 +2,16 @@ Source: v4l2loopback
 Section: graphics
 Priority: extra
 Maintainer: IOhannes m zmoelnig (gpg-key at iem) <zmoelnig@iem.at>
-Build-Depends: cdbs (>= 0.4.85~),
- debhelper (>= 7.0.1),
+Build-Depends: cdbs (>= 0.4.72~),
+ debhelper,
  dh-buildinfo,
- devscripts (>= 2.10.7~),
+ devscripts,
  dkms,
  bzip2
-Standards-Version: 3.9.1
+Standards-Version: 3.9.2
 Homepage: http://github.com/umlaeute/v4l2loopback
-Vcs-Git: git://git.debian.org/collab-maint/v4l2loopback
-Vcs-Browser: http://git.debian.org/?p=collab-maint/v4l2loopback.git;a=summary
+Vcs-Git: git://anonscm.debian.org/collab-maint/v4l2loopback
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/v4l2loopback.git
 
 Package: v4l2loopback-source
 Architecture: all

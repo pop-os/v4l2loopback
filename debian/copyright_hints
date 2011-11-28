@@ -1,4 +1,4 @@
-Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=166
+Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=174
 Upstream-Name: FIXME
 Upstream-Contact: FIXME
 Source: FIXME
@@ -19,9 +19,14 @@ Files: AUTHORS
  debian/v4l2loopback-dkms.dkms.in
  debian/watch
  examples/Makefile
- examples/README
  examples/test.c
 Copyright: *No copyright*
+License: UNKNOWN
+ FIXME
+
+Files: examples/README
+ examples/yuv4mpeg_to_v4l2.c
+Copyright: 2011, Eric C. Cooper <ecc@cmu.edu>
 License: UNKNOWN
  FIXME
 
@@ -71,7 +76,7 @@ License: GPL-2+
 
 Files: v4l2loopback.c
 Copyright: 2005-2009, Vasily Levin (vasaka@gmail.com)
- 2010, IOhannes m zmoelnig (zmoelnig@iem.at)
+ 2010-2011, IOhannes m zmoelnig (zmoelnig@iem.at)
 License: GPL-2+
  FIXME
 
