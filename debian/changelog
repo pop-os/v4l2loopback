@@ -1,3 +1,10 @@
+v4l2loopback (0.5.0-1) unstable; urgency=low
+
+  [ IOhannes m zmölnig ]
+  * Imported Upstream version 0.5.0
+
+ -- IOhannes m zmoelnig (gpg-key at iem) <zmoelnig@iem.at>  Mon, 02 Jan 2012 18:57:43 +0100
+
 v4l2loopback (0.4.1-1) unstable; urgency=low
 
   [ IOhannes m zmölnig ]
