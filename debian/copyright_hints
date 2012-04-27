@@ -1,4 +1,4 @@
-Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?rev=174
+Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: FIXME
 Upstream-Contact: FIXME
 Source: FIXME
@@ -18,8 +18,13 @@ Files: AUTHORS
  debian/rules.modules
  debian/source/format
  debian/v4l2loopback-dkms.dkms.in
+ debian/v4l2loopback-utils.install
+ debian/v4l2loopback-utils.manpages
  debian/watch
+ doc/kernel_debugging.txt
+ examples/.gitignore
  examples/Makefile
+ examples/restarting-writer.sh
  examples/test.c
  update_changelog.sh
 Copyright: *No copyright*
@@ -34,54 +39,62 @@ License: UNKNOWN
 
 Files: doc/v4l2.html
 Copyright: &copy; YEAR YOUR NAME
- 1999-2007, the contributors
- 1999-2008, Bill Dirks, Michael H. Schimek, Hans Verkuil, Martin
- HOLDERS AND CONTRIBUTORS
- holder saying it can be
- is claimed
- notices
- notices of the <A
- notices, a
- notices, and the license notice saying this License
+  1999-2007, the contributors
+  1999-2008, Bill Dirks, Michael H. Schimek, Hans Verkuil, Martin
+  HOLDERS AND CONTRIBUTORS
+  holder saying it can be
+  is claimed
+  notices
+  notices of the <A
+  notices, a
+  notices, and the license notice saying this License
 License: BSD (3 clause) GPL-2+
- FIXME
-
-Files: debian/rules
-Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
- 2010-2011, IOhannes m zmölnig <zmoelnig@iem.at>
- changelog docs README.Debian; do \
-License: GPL
  FIXME
 
 Files: COPYING
 Copyright: 1989, 1991 Free Software Foundation, Inc.
- <year> <name of author>
- HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
- HOLDERS AND/OR OTHER PARTIES
- disclaimer" for the program, if
- holder saying it may be distributed
- holder who places the Program under this License
- interest in the program
- law:
- the software, and
- year name of author
+  <year> <name of author>
+  HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+  HOLDERS AND/OR OTHER PARTIES
+  disclaimer" for the program, if
+  holder saying it may be distributed
+  holder who places the Program under this License
+  interest in the program
+  law:
+  the software, and
+  year name of author
 License: GPL-2+
  FIXME
 
 Files: README
 Copyright: 2005-2009, Vasily Levin
- 2009, Gorinich Zmey
- 2010, Scott Maines <smaines@alaya.com>
- 2010-2011, IOhannes m zmoelnig <zmoelnig@iem.at>
- 2011, Stefan Diewald (stefan.diewald@mytum.de)
+  2009, Gorinich Zmey
+  2010, Scott Maines <smaines@alaya.com>
+  2010-2012, IOhannes m zmoelnig <zmoelnig@iem.at>
+  2011, Stefan Diewald (stefan.diewald@mytum.de)
+  2012, Anton Novikov (random.plant@gmail.com)
 License: GPL-2+
  FIXME
 
 Files: v4l2loopback.c
 Copyright: 2005-2009, Vasily Levin (vasaka@gmail.com)
- 2010-2011, IOhannes m zmoelnig (zmoelnig@iem.at)
- 2011, Stefan Diewald (stefan.diewald@mytum.de)
+  2010-2012, IOhannes m zmoelnig (zmoelnig@iem.at)
+  2011, Stefan Diewald (stefan.diewald@mytum.de)
+  2012, Anton Novikov (random.plant@gmail.com)
 License: GPL-2+
+ FIXME
+
+Files: debian/rules
+Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+  2010-2011, IOhannes m zmölnig <zmoelnig@iem.at>
+  changelog docs README.Debian; do \
+License: GPL-2+
+ FIXME
+
+Files: utils/v4l2loopback-ctl
+Copyright: 2012, Anton Novikov (random.plant@gmail.com)
+  2012, IOhannes m zmoelnig <zmoelnig@iem.at>
+License: UNKNOWN
  FIXME
 
 Files: ChangeLog

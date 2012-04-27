@@ -1,3 +1,21 @@
+v4l2loopback (0.6.1-1) unstable; urgency=low
+
+  [ IOhannes m zmoelnig ]
+  * Imported Upstream version 0.6.1
+
+ -- IOhannes m zmoelnig (gpg-key at iem) <zmoelnig@iem.at>  Fri, 27 Apr 2012 17:45:21 +0200
+
+v4l2loopback (0.6.0-1) UNRELEASED; urgency=low
+
+  [ IOhannes m zmoelnig ]
+  * Imported Upstream version 0.6.0
+  * Added v4l2loopback-utils package (suggested by dkms/modules packages)
+  * Updated debian/copyright
+  * Regenerated debian/(control|copyright_hints)
+  * Bumped standards to 3.9.3
+
+ -- IOhannes m zmoelnig (gpg-key at iem) <zmoelnig@iem.at>  Fri, 27 Apr 2012 15:08:21 +0200
+
 v4l2loopback (0.5.0-1) unstable; urgency=low
 
   [ IOhannes m zmölnig ]
