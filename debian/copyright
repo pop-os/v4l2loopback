@@ -2,14 +2,18 @@ Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: v4l2loopback
 Upstream-Contact: IOhannes m zmölnig <zmoelnig@umlaeute.mur.at>
 Source: https://github.com/umlaeute/v4l2loopback/
+License: GPL-2+
 
 Files: *
 Copyright: 2005-2009, Vasily Levin
  2009, Gorinich Zmey
  2010, Scott Maines <smaines@alaya.com>
  2011, Stefan Diewald (stefan.diewald@mytum.de)
- 2010-2012, IOhannes m zmoelnig <zmoelnig@iem.at>
  2012, Anton Novikov <random.plant@gmail.com>
+ 2012, Ted Mielczarek <ted AT mielczarek DOT org>
+ 2012, Yusuke Ohshima <git AT yukke DOT org>
+ 2013, Anatolij Gustschin <agust AT denx DOT de>
+ 2010-2013, IOhannes m zmoelnig <zmoelnig@iem.at>
 License: GPL-2+
 
 Files: examples/yuv4mpeg_to_v4l2.c

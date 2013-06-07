@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: IOhannes m zmoelnig (gpg-key at iem) <zmoelnig@iem.at>
 Homepage: http://github.com/umlaeute/v4l2loopback
 Build-Depends: debhelper (>= 7)
-Standards-Version: 3.9.3
+Standards-Version: 3.9.4
 
 Package: v4l2loopback-modules-_KVERS_
 Architecture: any

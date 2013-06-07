@@ -51,28 +51,16 @@ Copyright: &copy; YEAR YOUR NAME
 License: BSD (3 clause) GPL-2+
  FIXME
 
-Files: COPYING
-Copyright: 1989, 1991 Free Software Foundation, Inc.
-  <year> <name of author>
-  HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-  HOLDERS AND/OR OTHER PARTIES
-  disclaimer" for the program, if
-  holder saying it may be distributed
-  holder who places the Program under this License
-  interest in the program
-  law:
-  the software, and
-  year name of author
-License: GPL-2+
- FIXME
-
 Files: README
 Copyright: 2005-2009, Vasily Levin
   2009, Gorinich Zmey
-  2010, Scott Maines <smaines@alaya.com>
-  2010-2012, IOhannes m zmoelnig <zmoelnig@iem.at>
-  2011, Stefan Diewald (stefan.diewald@mytum.de)
-  2012, Anton Novikov (random.plant@gmail.com)
+  2010, Scott Maines
+  2010-2013, IOhannes m zmoelnig
+  2011, Stefan Diewald
+  2012, Anton Novikov
+  2012, Ted Mielczarek
+  2012, Yusuke Ohshima
+  2013, Anatolij Gustschin
 License: GPL-2+
  FIXME
 
@@ -89,6 +77,21 @@ Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
   2010-2011, IOhannes m zmölnig <zmoelnig@iem.at>
   changelog docs README.Debian; do \
 License: GPL-2+
+ FIXME
+
+Files: COPYING
+Copyright: 1989, 1991 Free Software Foundation, Inc.
+  <year> <name of author>
+  HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
+  HOLDERS AND/OR OTHER PARTIES
+  disclaimer" for the program, if
+  holder saying it may be distributed
+  holder who places the Program under this License
+  interest in the program
+  law:
+  the software, and
+  year name of author
+License: GPL-ever
  FIXME
 
 Files: utils/v4l2loopback-ctl
