@@ -1,7 +1,7 @@
 Source: v4l2loopback
 Section: graphics
 Priority: extra
-Maintainer: IOhannes m zmoelnig (gpg-key at iem) <zmoelnig@iem.at>
+Maintainer: IOhannes m zmölnig <zmoelnig@iem.at>
 Build-Depends: cdbs,
  debhelper,
  dh-buildinfo,

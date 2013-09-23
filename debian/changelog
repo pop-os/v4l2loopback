@@ -1,3 +1,14 @@
+v4l2loopback (0.7.1-1) unstable; urgency=low
+
+  * Imported Upstream version 0.7.1
+   - fix LP: #1112644, LP: #1175046, LP: #1182622, LP: #1184444, LP: #1186281,
+     LP: #1186595, LP: #1190382, LP: #1214700, LP: #1219622, LP: #1223742.
+  * Updated debian/changelog
+  * Added Aidan Thornton to copyright-holders
+  * Regenerated debian/{control,copyright_hints}
+
+ -- IOhannes m zmölnig <zmoelnig@iem.at>  Mon, 23 Sep 2013 18:11:13 +0200
+
 v4l2loopback (0.7.0-1) unstable; urgency=low
 
   [ IOhannes m zmoelnig ]

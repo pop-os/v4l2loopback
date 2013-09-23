@@ -18,6 +18,18 @@
 #include <linux/time.h>
 #include <linux/module.h>
 #include <linux/videodev2.h>
+
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 29)
+# include <media/v4l2-device.h>
+#else
+/* dummy v4l2_device struct/functions */
+# define V4L2_DEVICE_NAME_SIZE (20 + 16)
+struct v4l2_device {
+  char name[V4L2_DEVICE_NAME_SIZE];
+};
+static inline int  v4l2_device_register  (void *dev, void *v4l2_dev) { return 0; }
+static inline void v4l2_device_unregister(struct v4l2_device *v4l2_dev) { return; }
+#endif
 #include <media/v4l2-ioctl.h>
 #include <media/v4l2-common.h>
 
@@ -155,6 +167,7 @@ struct v4l2l_buffer {
 };
 
 struct v4l2_loopback_device {
+	struct v4l2_device v4l2_dev;
 	struct video_device *vdev;
 	/* pixel and stream format */
 	struct v4l2_pix_format pix_format;
@@ -2059,19 +2072,30 @@ static void timeout_timer_clb(unsigned long nr)
 /* init loopback main structure */
 static int v4l2_loopback_init(struct v4l2_loopback_device *dev, int nr)
 {
+	int ret;
+	snprintf(dev->v4l2_dev.name, sizeof(dev->v4l2_dev.name),
+                        "v4l2loopback-%03d", nr);
+        ret = v4l2_device_register(NULL, &dev->v4l2_dev);
+        if (ret)
+                return ret;
+
 	MARK();
 	dev->vdev = video_device_alloc();
-	if (dev->vdev == NULL)
+	if (dev->vdev == NULL) {
+		v4l2_device_unregister(&dev->v4l2_dev);
 		return -ENOMEM;
+	}
 
 	video_set_drvdata(dev->vdev, kzalloc(sizeof(struct v4l2loopback_private), GFP_KERNEL));
 	if (video_get_drvdata(dev->vdev) == NULL) {
+		v4l2_device_unregister(&dev->v4l2_dev);
 		kfree(dev->vdev);
 		return -ENOMEM;
 	}
 	((struct v4l2loopback_private *)video_get_drvdata(dev->vdev))->devicenr = nr;
 
 	init_vdev(dev->vdev, nr);
+	dev->vdev->v4l2_dev = &dev->v4l2_dev;
 	init_capture_param(&dev->capture_param);
 	set_timeperframe(dev, &dev->capture_param.timeperframe);
 	dev->keep_format = 0;
@@ -2200,6 +2224,7 @@ static void free_devices(void)
 			v4l2loopback_remove_sysfs(devs[i]->vdev);
 			kfree(video_get_drvdata(devs[i]->vdev));
 			video_unregister_device(devs[i]->vdev);
+			v4l2_device_unregister(&devs[i]->v4l2_dev);
 			kfree(devs[i]);
 			devs[i] = NULL;
 		}

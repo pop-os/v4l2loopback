@@ -41,13 +41,6 @@ Files: doc/v4l2.html
 Copyright: &copy; YEAR YOUR NAME
   1999-2007, the contributors
   1999-2008, Bill Dirks, Michael H. Schimek, Hans Verkuil, Martin
-  HOLDERS AND CONTRIBUTORS
-  holder saying it can be
-  is claimed
-  notices
-  notices of the <A
-  notices, a
-  notices, and the license notice saying this License
 License: BSD (3 clause) GPL-2+
  FIXME
 
@@ -60,6 +53,7 @@ Copyright: 2005-2009, Vasily Levin
   2012, Anton Novikov
   2012, Ted Mielczarek
   2012, Yusuke Ohshima
+  2013, Aidan Thornton
   2013, Anatolij Gustschin
 License: GPL-2+
  FIXME
@@ -82,11 +76,7 @@ License: GPL-2+
 Files: COPYING
 Copyright: 1989, 1991 Free Software Foundation, Inc.
   <year> <name of author>
-  HOLDER, OR ANY OTHER PARTY WHO MAY MODIFY AND/OR
-  HOLDERS AND/OR OTHER PARTIES
   disclaimer" for the program, if
-  holder saying it may be distributed
-  holder who places the Program under this License
   interest in the program
   law:
   the software, and
