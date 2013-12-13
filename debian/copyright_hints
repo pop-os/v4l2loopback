@@ -8,6 +8,7 @@ Files: AUTHORS
  Makefile
  NEWS
  TODO
+ currentversion.sh
  debian/README.Debian
  debian/compat
  debian/control
@@ -17,10 +18,11 @@ Files: AUTHORS
  debian/docs
  debian/rules.modules
  debian/source/format
- debian/v4l2loopback-dkms.dkms.in
+ debian/v4l2loopback-dkms.dkms
  debian/v4l2loopback-utils.install
  debian/v4l2loopback-utils.manpages
  debian/watch
+ dkms.conf
  doc/kernel_debugging.txt
  examples/.gitignore
  examples/Makefile
@@ -38,9 +40,9 @@ License: UNKNOWN
  FIXME
 
 Files: doc/v4l2.html
-Copyright: &copy; YEAR YOUR NAME
+Copyright: &copy; 1999-2008, Bill Dirks, Michael H. Schimek, Hans Verkuil, Martin
   1999-2007, the contributors
-  1999-2008, Bill Dirks, Michael H. Schimek, Hans Verkuil, Martin
+  YEAR YOUR NAME
 License: BSD (3 clause) GPL-2+
  FIXME
 

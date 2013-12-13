@@ -18,6 +18,10 @@ else
  NEWVERSION=$2
 fi
 
+if [ "x$NEWVERSION" = "x" ]; then
+  NEWVERSION=$(./currentversion.sh)
+fi
+
 if git tag -l v${OLDVERSION} | grep . >/dev/null
 then
  :
@@ -27,7 +31,7 @@ else
 fi
 
 if [ "x$OLDVERSION" = "x" ]; then
- echo "usage: $0 [<LASTVERSION>] <CURVERSION>" 1>&2
+ echo "usage: $0 [[<LASTVERSION>] <CURVERSION>]" 1>&2
  exit 1
 fi
 
@@ -53,6 +57,11 @@ git-dch -R --since "v${OLDVERSION}" -N ${NEWVERSION} && cat debian/changelog > $
 rm -rf debian
 
 if [ "x$OK" = "xtrue" ]; then
+  sed -e "s|^PACKAGE_VERSION=\".*\"$|PACKAGE_VERSION=\"${NEWVERSION}\"|" -i dkms.conf
+fi
+
+if [ "x$OK" = "xtrue" ]; then
  echo "all went well"
  echo "check your $CHANGELOG and don't forget to git-tag the new version as v${NEWVERSION}"
+ echo " git tag v${NEWVERSION}"
 fi

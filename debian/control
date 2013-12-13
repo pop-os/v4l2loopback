@@ -1,15 +1,15 @@
 Source: v4l2loopback
-Section: graphics
-Priority: extra
+Section: kernel
+Priority: optional
 Maintainer: IOhannes m zmölnig <zmoelnig@iem.at>
 Build-Depends: cdbs,
- debhelper,
+ debhelper (>= 7),
  dh-buildinfo,
  devscripts,
  help2man (>= 1.37.1~),
  dkms,
  bzip2
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: http://github.com/umlaeute/v4l2loopback
 Vcs-Git: git://anonscm.debian.org/collab-maint/v4l2loopback
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/v4l2loopback.git
@@ -17,7 +17,7 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/v4l2loopback.git
 Package: v4l2loopback-source
 Architecture: all
 Depends: ${misc:Depends},
- debhelper (>= 7),
+ debhelper (>=7),
  make, 
  bzip2
 Recommends: module-assistant
@@ -43,6 +43,7 @@ Description: Source for the v4l2loopback driver (DKMS)
  to be built with dkms.
 
 Package: v4l2loopback-utils
+Section: graphics
 Architecture: all
 Depends: ${misc:Depends},
  gstreamer0.10-tools,

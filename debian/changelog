@@ -1,3 +1,16 @@
+v4l2loopback (0.8.0-1) unstable; urgency=medium
+
+  * Imported Upstream version 0.8.0
+  * Use upstream's dkms.conf
+    + Stop generating local dkms.conf file
+  * Fixed my name in the modules' control-file
+  * Used section "kernel" for kernel-modules
+  * Raised priority to "optional"
+  * Updated debian/(control,copyright,copyright_hints)
+  * Bumped Standards-Version to 3.9.5
+
+ -- IOhannes m zmölnig <zmoelnig@iem.at>  Fri, 13 Dec 2013 14:54:10 +0100
+
 v4l2loopback (0.7.1-1) unstable; urgency=low
 
   * Imported Upstream version 0.7.1
