@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # -*- mode: makefile; coding: utf-8 -*-
 # Copyright © 2008 Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
-# Copyright © 2010-2011 IOhannes m zmölnig <zmoelnig@iem.at>
+# Copyright © 2010-2014 IOhannes m zmölnig <umlaeute@debian.org>
 # Description: Main Debian packaging script for v4l2loopback-sorce
 #
 # This program is free software; you can redistribute it and/or

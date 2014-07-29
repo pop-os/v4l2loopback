@@ -1,7 +1,7 @@
 Source: v4l2loopback
 Section: graphics
 Priority: optional
-Maintainer: IOhannes m zmölnig <zmoelnig@iem.at>
+Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
 Homepage: http://github.com/umlaeute/v4l2loopback
 Build-Depends: debhelper (>= 7)
 Standards-Version: 3.9.5

@@ -40,9 +40,9 @@ License: UNKNOWN
  FIXME
 
 Files: doc/v4l2.html
-Copyright: &copy; 1999-2008, Bill Dirks, Michael H. Schimek, Hans Verkuil, Martin
+Copyright: &copy; YEAR YOUR NAME
   1999-2007, the contributors
-  YEAR YOUR NAME
+  1999-2008, Bill Dirks, Michael H. Schimek, Hans Verkuil, Martin
 License: BSD (3 clause) GPL-2+
  FIXME
 
@@ -70,7 +70,7 @@ License: GPL-2+
 
 Files: debian/rules
 Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
-  2010-2011, IOhannes m zmölnig <zmoelnig@iem.at>
+  2010-2014, IOhannes m zmölnig <umlaeute@debian.org>
   changelog docs README.Debian; do \
 License: GPL-2+
  FIXME

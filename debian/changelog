@@ -1,3 +1,11 @@
+v4l2loopback (0.8.0-2) unstable; urgency=medium
+
+  * Disabled v4l2loopback-utils on non-linux (Closes: #756401)
+  * Fixed my Maintainer address
+  * Updated debian/(control,copyright_hints)
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Tue, 29 Jul 2014 17:17:46 +0200
+
 v4l2loopback (0.8.0-1) unstable; urgency=medium
 
   * Imported Upstream version 0.8.0

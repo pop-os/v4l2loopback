@@ -1,7 +1,7 @@
 Source: v4l2loopback
 Section: kernel
 Priority: optional
-Maintainer: IOhannes m zmölnig <zmoelnig@iem.at>
+Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
 Build-Depends: @cdbs@,
  dkms,
  bzip2
@@ -40,7 +40,7 @@ Description: Source for the v4l2loopback driver (DKMS)
 
 Package: v4l2loopback-utils
 Section: graphics
-Architecture: all
+Architecture: linux-any
 Depends: ${misc:Depends},
  gstreamer0.10-tools,
  v4l-utils
