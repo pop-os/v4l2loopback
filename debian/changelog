@@ -1,3 +1,9 @@
+v4l2loopback (0.8.0-3) unstable; urgency=medium
+
+  * Getting make-dependencies right (Closes: #757318)
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 04 Sep 2014 15:06:49 +0200
+
 v4l2loopback (0.8.0-2) unstable; urgency=medium
 
   * Disabled v4l2loopback-utils on non-linux (Closes: #756401)

@@ -52,9 +52,11 @@ install/v4l2loopback-dkms::
 ## building manpages
 CDBS_BUILD_DEPENDS += , help2man (>= 1.37.1~)
 manpages=man/v4l2loopback-ctl.1
-common-binary-indep:: $(manpages)
-clean::
-	rm -f $(manpages)
+common-build-indep:: $(manpages)
+clean:: clean-manpages
 
+.PHONY: clean-manpages
+clean-manpages:
+	rm -f $(manpages)
 man/v4l2loopback-ctl.1: utils/v4l2loopback-ctl
 	help2man -N --name "control v4l2 loopback devices" $^ > $@
