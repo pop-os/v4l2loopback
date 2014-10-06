@@ -52,7 +52,7 @@ install/v4l2loopback-dkms::
 ## building manpages
 CDBS_BUILD_DEPENDS += , help2man (>= 1.37.1~)
 manpages=man/v4l2loopback-ctl.1
-common-build-indep:: $(manpages)
+build/v4l2loopback-utils:: $(manpages)
 clean:: clean-manpages
 
 .PHONY: clean-manpages

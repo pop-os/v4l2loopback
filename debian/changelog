@@ -1,3 +1,9 @@
+v4l2loopback (0.8.0-4) unstable; urgency=medium
+
+  * Build manpages as part of building v4l2loopback-utils (Closes: #764121)
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Mon, 06 Oct 2014 21:21:45 +0200
+
 v4l2loopback (0.8.0-3) unstable; urgency=medium
 
   * Getting make-dependencies right (Closes: #757318)

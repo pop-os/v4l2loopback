@@ -5,7 +5,7 @@ Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
 Build-Depends: @cdbs@,
  dkms,
  bzip2
-Standards-Version: 3.9.5
+Standards-Version: 3.9.6
 Homepage: http://github.com/umlaeute/v4l2loopback
 Vcs-Git: git://anonscm.debian.org/collab-maint/v4l2loopback
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/v4l2loopback.git
