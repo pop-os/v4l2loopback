@@ -1,3 +1,9 @@
+v4l2loopback (0.8.0-5) unstable; urgency=medium
+
+  * Fixate time-stamp for reproducible builds (Closes: #778456)
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Mon, 27 Apr 2015 22:24:11 +0200
+
 v4l2loopback (0.8.0-4) unstable; urgency=medium
 
   * Build manpages as part of building v4l2loopback-utils (Closes: #764121)
