@@ -29,7 +29,7 @@ install/v4l2loopback-source::
 		debian/tmp/modules/v4l2loopback/Makefile
 	install -m 0644  v4l2loopback.c \
 		debian/tmp/modules/v4l2loopback/
-	install -m 0644  README NEWS AUTHORS ChangeLog \
+	install -m 0644  README.md NEWS AUTHORS ChangeLog \
 		debian/tmp/modules/v4l2loopback/
 
 	# Enforce executable bit on debian/rules, and create directory

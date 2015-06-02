@@ -1,3 +1,4 @@
+# process with uscan(1)
 version=3
-opts="uversionmangle=s/^\/v//;s/\/0~master/0/" \
-http://githubredir.debian.net/github/umlaeute/v4l2loopback (.*).tar.gz
+opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/v4l2loopback-$1\.tar\.gz/ \
+  https://github.com/umlaeute/v4l2loopback/tags .*/v?(\d\S*)\.tar\.gz

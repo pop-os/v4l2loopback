@@ -12,26 +12,26 @@ Copyright: 2005-2009, Vasily Levin
  2012, Anton Novikov <random.plant@gmail.com>
  2012, Ted Mielczarek <ted AT mielczarek DOT org>
  2012, Yusuke Ohshima <git AT yukke DOT org>
- 2013, Anatolij Gustschin <agust AT denx DOT de>
+ 2013, Anatolij Gutschin <agust AT denx DOT de>
  2013, Aidan Thornton <makosoft AT gmail DOT com>
  2013, Angus McInnes <angus AT amcinnes DOT info>
  2013, Dmitry Eremin <dmitry.eremin AT intel DOT com>
  2013, Javier Infante <jabiinfante AT gmail DOT com>
- 2010-2013, IOhannes m zmoelnig <zmoelnig@iem.at>
+ 2015, Tasos Sahanidis <tasos AT tasossah DOT com>
+ 2010-2015, IOhannes m zmölnig <zmoelnig@iem.at>
 License: GPL-2+
 
 Files: examples/yuv4mpeg_to_v4l2.c
 Copyright: 2011, Eric C. Cooper <ecc@cmu.edu>
 License: GPL-2+
 
-Files: doc/v4l2.html
-Copyright: 1999-2008, Bill Dirks, Michael H. Schimek
- 1999-2008, Hans Verkuil and Martin Rubli
-License: GFDL-1.1+
+Files: tests/test_dqbuf.c
+Copyright: 2014, Nicolas Dufresne
+License: GPL-2+
 
 Files: debian/*
 Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
- 2010-2012, IOhannes m zmölnig <zmoelnig@iem.at>
+ 2010-2015, IOhannes m zmölnig <umlaeute@debian.org>
 License: GPL-2+
 
 License: GPL-2+
@@ -50,19 +50,3 @@ License: GPL-2+
  .
  You should have received a copy of the GNU General Public License along
  with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-License: GFDL-1.1+
- Permission is granted to copy, distribute and/or modify
- this document under the terms of the GNU Free Documentation License,
- Version 1.1 or any later version published by the Free Software
- Foundation; with no Invariant Sections, with no Front-Cover Texts, and
- with no Back-Cover Texts. 
- .
- On Debian systems, the complete text of the GNU Free Documentation License
- (GFDL) version 1.2 can be found in "/usr/share/common-licenses/GFDL-1.2".
- .
- You should have received a copy of the GNU Free Documentation License
- with this program.  If not, see <http://www.gnu.org/licenses/>.
- .
- Programming examples can be used and distributed without
- restrictions.
