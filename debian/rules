@@ -27,7 +27,7 @@ install/v4l2loopback-source::
 	# install source code and create directory
 	install -D -m 0755  Makefile \
 		debian/tmp/modules/v4l2loopback/Makefile
-	install -m 0644  v4l2loopback.c \
+	install -m 0644  v4l2loopback.c v4l2loopback_formats.h \
 		debian/tmp/modules/v4l2loopback/
 	install -m 0644  README.md NEWS AUTHORS ChangeLog \
 		debian/tmp/modules/v4l2loopback/
