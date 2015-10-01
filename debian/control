@@ -46,7 +46,8 @@ Package: v4l2loopback-utils
 Section: graphics
 Architecture: linux-any
 Depends: ${misc:Depends},
- gstreamer0.10-tools,
+ sudo,
+ gstreamer1.0-tools,
  v4l-utils
 Recommends: v4l2loopback-dkms |  v4l2loopback-modules
 Description: Commandline utilities for the for the v4l2-loopback module

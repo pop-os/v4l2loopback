@@ -1,3 +1,12 @@
+v4l2loopback (0.9.1-3) unstable; urgency=medium
+
+  * Migrate to GStreamer-1.0 (Closes: #799721)
+    - Switch ctl-script to use GStreamer-1.0
+    - Depend on gstreamer1.0-tools
+  * ctl-script depends on sudo
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 01 Oct 2015 21:09:17 +0200
+
 v4l2loopback (0.9.1-2) unstable; urgency=medium
 
   * Include v4l2loopback_formats.h in v4l2loopback-source pkg (Closes: #793435)
