@@ -11,12 +11,16 @@ Files: AUTHORS
  TODO
  currentversion.sh
  debian/README.Debian
+ debian/README.source
  debian/compat
  debian/control
  debian/control.in
  debian/control.modules.in
  debian/dirs
  debian/docs
+ debian/git-tuneclone.sh
+ debian/patches/gstreamer1.patch
+ debian/patches/series
  debian/rules.modules
  debian/source/format
  debian/v4l2loopback-dkms.dkms
@@ -39,6 +43,12 @@ Files: AUTHORS
  tests/interlaced_w
  v4l2loopback_formats.h
 Copyright: *No copyright*
+License: UNKNOWN
+ FIXME
+
+Files: examples/README
+ examples/yuv4mpeg_to_v4l2.c
+Copyright: 2011, Eric C. Cooper <ecc@cmu.edu>
 License: UNKNOWN
  FIXME
 
@@ -69,35 +79,17 @@ License: GPL-2+
 Files: debian/rules
 Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
   2010-2014, IOhannes m zmölnig <umlaeute@debian.org>
-  changelog docs README.Debian; do \
 License: GPL-2+
  FIXME
 
 Files: COPYING
 Copyright: 1989, 1991 Free Software Foundation, Inc.
-  <year> <name of author>
-  disclaimer" for the program, if
-  interest in the program
-  law:
-  the software, and
-  year name of author
 License: GPL-ever
  FIXME
 
 Files: utils/v4l2loopback-ctl
 Copyright: 2012, Anton Novikov (random.plant@gmail.com)
   2012, IOhannes m zmoelnig <zmoelnig@iem.at>
-License: UNKNOWN
- FIXME
-
-Files: examples/yuv4mpeg_to_v4l2.c
-Copyright: 2011, Eric C. Cooper <ecc@cmu.edu>
-License: UNKNOWN
- FIXME
-
-Files: examples/README
-Copyright: 2011, Eric C. Cooper <ecc@cmu.edu>
-  2015, tz@execpc.com, GPLv3
 License: UNKNOWN
  FIXME
 

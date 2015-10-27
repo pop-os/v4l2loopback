@@ -8,11 +8,12 @@ Build-Depends: cdbs,
  devscripts,
  help2man (>= 1.37.1~),
  dkms,
+ tar (>= 1.28),
  bzip2
 Standards-Version: 3.9.6
-Homepage: http://github.com/umlaeute/v4l2loopback
+Homepage: https://github.com/umlaeute/v4l2loopback
 Vcs-Git: git://anonscm.debian.org/collab-maint/v4l2loopback
-Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/v4l2loopback.git
+Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/v4l2loopback.git
 
 Package: v4l2loopback-source
 Architecture: all

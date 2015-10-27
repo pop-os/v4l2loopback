@@ -1,3 +1,15 @@
+v4l2loopback (0.9.1-4) unstable; urgency=medium
+
+  * Sort output in generated tarball.
+    Thanks to Reiner Herrmann <reiner@reiner-h.de> (Closes: #803183)
+  * Use https://
+    - in Vcs-* stanzas
+    - for homepage
+  * Added README.source to point out CDBS peculiarities
+  * Regenerated debian/control|copyright_hints
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Tue, 27 Oct 2015 20:46:45 +0100
+
 v4l2loopback (0.9.1-3) unstable; urgency=medium
 
   * Migrate to GStreamer-1.0 (Closes: #799721)
