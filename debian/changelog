@@ -1,3 +1,20 @@
+v4l2loopback (0.10.0-1) unstable; urgency=medium
+
+  * New upstream version 0.10.0
+    (Closes: #816768, #800605)
+
+  * Removed patches applied upstream.
+  * Updated d/copyright
+  * Updated d/watch to filter-out non-release tags
+  * Notes on how to properly clone the packaging repo
+  * Reformatted of multi-values fields
+  * Updated Vcs-* stanzas (https)
+  * v4l2loopback-utils is Multi-Arch:same
+  * Bumped debhelper compat to 9
+  * Bumped standards-version to 3.9.8
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Sat, 03 Dec 2016 20:49:41 +0100
+
 v4l2loopback (0.9.1-4) unstable; urgency=medium
 
   * Sort output in generated tarball.

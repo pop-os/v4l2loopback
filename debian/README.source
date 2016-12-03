@@ -28,3 +28,38 @@ More info here: http://wiki.debian.org/CDBS+git-buildpackage
 
  -- Jonas Smedegaard <dr@jones.dk>  Mon, 18 Feb 2013 12:55:37 +0100
 
+
+gbp clone
+---------
+
+Starting with gbp>0.8.1, here's a simple way to automatically fine-tune the
+repository in the following ways:
+- make git ignore any .pc/ directory (created by quilt)
+- enable the "--follow-tags" when running 'git-push', so it's harder
+  to forget to push packaging tags along with the branches.
+
+To enable this for ALL repositories cloned via 'gbp' (in the future), do
+something like the following:
+
+    $ mkdir -p ~/bin
+    $ cat >> ~/bin/gbphook-postclone <<EOF
+    #!/bin/sh
+    ## script to initialize a cloned repository
+
+    # - enable the "--follow-tags" mode for pushing
+    echo "tuning git-repository for ${NAME}"
+    git config push.followTags true && echo "enabled push.followTags"
+
+    # - ignore quilt's .pc/ directory
+    GITEXCLUDE=".git/info/exclude"
+    egrep "^/?\.pc/?$" "${GITEXCLUDE}" >/dev/null 2>&1 \
+      || (echo "/.pc/" >> "${GITEXCLUDE}" && echo "ignoring /.pc/")
+    EOF
+    $ chmod u+x ~/bin/gbphook-postclone
+    $ cat >> ~/.gbp.conf <<EOF
+    [clone]
+    postclone = ~/bin/gbphook-postclone
+    EOF
+    $ gbp clone ...
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Mon, 1 Aug 2016 12:15:50 +0200

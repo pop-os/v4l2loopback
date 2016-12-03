@@ -2,26 +2,29 @@ Source: v4l2loopback
 Section: kernel
 Priority: optional
 Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
-Build-Depends: cdbs,
+Build-Depends:
+ cdbs,
  debhelper,
  dh-buildinfo,
- devscripts,
+ licensecheck,
  help2man (>= 1.37.1~),
  dkms,
  tar (>= 1.28),
- bzip2
-Standards-Version: 3.9.6
+ bzip2,
+Standards-Version: 3.9.8
 Homepage: https://github.com/umlaeute/v4l2loopback
-Vcs-Git: git://anonscm.debian.org/collab-maint/v4l2loopback
-Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/v4l2loopback.git
+Vcs-Git: https://anonscm.debian.org/git/collab-maint/v4l2loopback.git
+Vcs-Browser: https://anonscm.debian.org/git/collab-maint/v4l2loopback.git
 
 Package: v4l2loopback-source
 Architecture: all
-Depends: ${misc:Depends},
- debhelper (>=7),
+Depends:
+ ${misc:Depends},
+ debhelper,
  make, 
- bzip2
-Recommends: module-assistant
+ bzip2,
+Recommends:
+ module-assistant
 Description: Source for the v4l2loopback driver
  This module allows you to create "virtual video devices".
  Normal (v4l2) applications will read these devices as if they were ordinary
@@ -32,7 +35,8 @@ Description: Source for the v4l2loopback driver
 
 Package: v4l2loopback-dkms
 Architecture: all
-Depends: ${misc:Depends}
+Depends:
+ ${misc:Depends}
 Suggests: v4l2loopback-utils
 Description: Source for the v4l2loopback driver (DKMS)
  This module allows you to create "virtual video devices".
@@ -46,11 +50,14 @@ Description: Source for the v4l2loopback driver (DKMS)
 Package: v4l2loopback-utils
 Section: graphics
 Architecture: linux-any
-Depends: ${misc:Depends},
+Multi-Arch: same
+Depends:
+ ${misc:Depends},
  sudo,
  gstreamer1.0-tools,
- v4l-utils
-Recommends: v4l2loopback-dkms |  v4l2loopback-modules
+ v4l-utils,
+Recommends:
+ v4l2loopback-dkms |  v4l2loopback-modules,
 Description: Commandline utilities for the for the v4l2-loopback module
  This package contains applications to interact with v4l2-loopback devices
  ("virtual video devices").

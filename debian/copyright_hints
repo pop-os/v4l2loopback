@@ -18,12 +18,12 @@ Files: AUTHORS
  debian/control.modules.in
  debian/dirs
  debian/docs
- debian/git-tuneclone.sh
- debian/patches/gstreamer1.patch
- debian/patches/series
  debian/rules.modules
  debian/source/format
+ debian/v4l2loopback-dkms.debhelper.log
  debian/v4l2loopback-dkms.dkms
+ debian/v4l2loopback-source.debhelper.log
+ debian/v4l2loopback-utils.debhelper.log
  debian/v4l2loopback-utils.install
  debian/v4l2loopback-utils.manpages
  debian/watch
@@ -42,21 +42,20 @@ Files: AUTHORS
  tests/Makefile
  tests/interlaced_w
  v4l2loopback_formats.h
-Copyright: *No copyright*
+Copyright: NONE
 License: UNKNOWN
  FIXME
 
-Files: examples/README
- examples/yuv4mpeg_to_v4l2.c
+Files: examples/yuv4mpeg_to_v4l2.c
 Copyright: 2011, Eric C. Cooper <ecc@cmu.edu>
-License: UNKNOWN
+License: GPL
  FIXME
 
 Files: README.md
 Copyright: 2005-2009, Vasily Levin
   2009, Gorinich Zmey
   2010, Scott Maines
-  2010-2015, IOhannes m zmoelnig
+  2010-2016, IOhannes m zmoelnig
   2011, Stefan Diewald
   2012, Anton Novikov
   2012, Ted Mielczarek
@@ -64,7 +63,12 @@ Copyright: 2005-2009, Vasily Levin
   2013, Aidan Thornton
   2013, Anatolij Gustschin
   2014-2015, Tasos Sahanidis
+  2015, Kurt Kiefer
+  2015, Michel Promonet
+  2015, Paul Brook
   2015, Tom Zerucha
+  2016, Gavin Qiu
+  2016, George Chriss
 License: GPL-2+
  FIXME
 
@@ -76,20 +80,40 @@ Copyright: 2005-2009, Vasily Levin (vasaka@gmail.com)
 License: GPL-2+
  FIXME
 
-Files: debian/rules
-Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
-  2010-2014, IOhannes m zmölnig <umlaeute@debian.org>
+Files: COPYING
+Copyright: 1989, 1991, Free Software Foundation, Inc.,
+  <year> <name of author>
+  disclaimer" for the program, if
+  ed by the Free
+  ed interfaces, the
+  interest in the program
+  the software, and
+  year name of author
 License: GPL-2+
  FIXME
 
-Files: COPYING
-Copyright: 1989, 1991 Free Software Foundation, Inc.
-License: GPL-ever
+Files: debian/rules
+Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
+  2010-2014, IOhannes m zmÃ¶lnig <umlaeute@debian.org>
+  changelog docs README.Debian; do
+License: GPL-2+
+ FIXME
+
+Files: man/v4l2loopback-ctl.1
+Copyright: (co 2012 Anton Novikov (random.plant@gmail.com)
+  Copyright (co 2012 IOhannes m zmoelnig <zmoelnig@iem.at>
+License: UNKNOWN
  FIXME
 
 Files: utils/v4l2loopback-ctl
 Copyright: 2012, Anton Novikov (random.plant@gmail.com)
   2012, IOhannes m zmoelnig <zmoelnig@iem.at>
+License: UNKNOWN
+ FIXME
+
+Files: examples/README
+Copyright: 2011, Eric C. Cooper <ecc@cmu.edu>
+  2015, tz@execpc.com, GPLv3.
 License: UNKNOWN
  FIXME
 
