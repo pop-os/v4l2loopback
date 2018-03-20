@@ -36,7 +36,11 @@
 # define kstrtoul strict_strtoul
 #endif
 
-#define V4L2LOOPBACK_VERSION_CODE KERNEL_VERSION(0, 10, 0)
+#if defined(timer_setup) && defined(from_timer)
+#define HAVE_TIMER_SETUP
+#endif
+
+#define V4L2LOOPBACK_VERSION_CODE KERNEL_VERSION(0, 11, 0)
 
 MODULE_DESCRIPTION("V4L2 loopback video device");
 MODULE_AUTHOR("Vasily Levin, " \
@@ -372,6 +376,13 @@ struct v4l2l_format {
 #define FORMAT_FLAGS_PLANAR       0x01
 #define FORMAT_FLAGS_COMPRESSED   0x02
 
+#ifndef V4L2_PIX_FMT_VP9
+#define V4L2_PIX_FMT_VP9  v4l2_fourcc('V', 'P', '9', '0')
+#endif
+#ifndef V4L2_PIX_FMT_HEVC
+#define V4L2_PIX_FMT_HEVC  v4l2_fourcc('H', 'E', 'V', 'C')
+#endif
+
 static const struct v4l2l_format formats[] = {
 #include "v4l2loopback_formats.h"
 };
@@ -456,12 +467,12 @@ static ssize_t attr_show_format(struct device *cd,
 	tpf = &dev->capture_param.timeperframe;
 
 	fourcc2str(dev->pix_format.pixelformat, buf4cc);
+        buf4cc[4]=0;
 	if (tpf->numerator == 1)
 		snprintf(buf_fps, sizeof(buf_fps), "%d", tpf->denominator);
 	else
 		snprintf(buf_fps, sizeof(buf_fps), "%d/%d",
 				tpf->denominator, tpf->numerator);
-
 	return sprintf(buf, "%4s:%dx%d@%s\n",
 		buf4cc, dev->pix_format.width, dev->pix_format.height, buf_fps);
 }
@@ -514,7 +525,7 @@ static ssize_t attr_store_maxopeners(struct device *cd,
 
 	if (kstrtoul(buf, 0, &curr))
 		return -EINVAL;
-	
+
 	dev = v4l2loopback_cd2dev(cd);
 
 	if (dev->max_openers == curr)
@@ -807,12 +818,8 @@ static int vidioc_g_fmt_cap(struct file *file, void *priv, struct v4l2_format *f
  */
 static int vidioc_try_fmt_cap(struct file *file, void *priv, struct v4l2_format *fmt)
 {
-	struct v4l2_loopback_opener *opener;
 	struct v4l2_loopback_device *dev;
 	char buf[5];
-
-	opener = file->private_data;
-	opener->type = READER;
 
 	dev = v4l2loopback_getdevice(file);
 
@@ -907,8 +914,7 @@ static int vidioc_g_fmt_out(struct file *file, void *priv, struct v4l2_format *f
 
 	dev = v4l2loopback_getdevice(file);
 	opener = file->private_data;
-	opener->type = WRITER;
-	dev->ready_for_output = 1;
+
 	/*
 	 * LATER: this should return the currently valid format
 	 * gstreamer doesn't like it, if this returns -EINVAL, as it
@@ -927,15 +933,10 @@ static int vidioc_g_fmt_out(struct file *file, void *priv, struct v4l2_format *f
  */
 static int vidioc_try_fmt_out(struct file *file, void *priv, struct v4l2_format *fmt)
 {
-	struct v4l2_loopback_opener *opener;
 	struct v4l2_loopback_device *dev;
 	MARK();
 
-	opener = file->private_data;
-	opener->type = WRITER;
-
 	dev = v4l2loopback_getdevice(file);
-	dev->ready_for_output = 1;
 
 	/* TODO(vasaka) loopback does not care about formats writer want to set,
 	 * maybe it is a good idea to restrict format somehow */
@@ -1304,10 +1305,7 @@ static int vidioc_s_output(struct file *file, void *fh, unsigned int i)
 static int vidioc_enum_input(struct file *file, void *fh, struct v4l2_input *inp)
 {
 	__u32 index = inp->index;
-	struct v4l2_loopback_device *dev = v4l2loopback_getdevice(file);
 	MARK();
-        if (!dev->announce_all_caps && !dev->ready_for_capture)
-		return -ENOTTY;
 
 	if (0 != index)
 		return -EINVAL;
@@ -1639,13 +1637,16 @@ static int vidioc_dqbuf(struct file *file, void *private_data, struct v4l2_buffe
 static int vidioc_streamon(struct file *file, void *private_data, enum v4l2_buf_type type)
 {
 	struct v4l2_loopback_device *dev;
+	struct v4l2_loopback_opener *opener;
 	int ret;
 	MARK();
 
 	dev = v4l2loopback_getdevice(file);
+	opener = file->private_data;
 
 	switch (type) {
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
+		opener->type = WRITER;
 		dev->ready_for_output = 0;
 		if (!dev->ready_for_capture) {
 			ret = allocate_buffers(dev);
@@ -1655,6 +1656,7 @@ static int vidioc_streamon(struct file *file, void *private_data, enum v4l2_buf_
 		}
 		return 0;
 	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
+		opener->type = READER;
 		if (!dev->ready_for_capture)
 			return -EIO;
 		return 0;
@@ -2120,11 +2122,15 @@ static void check_timers(struct v4l2_loopback_device *dev)
 	if (dev->sustain_framerate && !timer_pending(&dev->sustain_timer))
 		mod_timer(&dev->sustain_timer, jiffies + dev->frame_jiffies * 3 / 2);
 }
-
+#ifdef HAVE_TIMER_SETUP
+static void sustain_timer_clb(struct timer_list *t)
+{
+	struct v4l2_loopback_device *dev = from_timer(dev,t,sustain_timer);
+#else
 static void sustain_timer_clb(unsigned long nr)
 {
 	struct v4l2_loopback_device *dev = devs[nr];
-
+#endif
 	spin_lock(&dev->lock);
 	if (dev->sustain_framerate) {
 		dev->reread_count++;
@@ -2137,11 +2143,15 @@ static void sustain_timer_clb(unsigned long nr)
 	}
 	spin_unlock(&dev->lock);
 }
-
+#ifdef HAVE_TIMER_SETUP
+static void timeout_timer_clb(struct timer_list *t)
+{
+	struct v4l2_loopback_device *dev = from_timer(dev,t,timeout_timer);
+#else
 static void timeout_timer_clb(unsigned long nr)
 {
 	struct v4l2_loopback_device *dev = devs[nr];
-
+#endif
 	spin_lock(&dev->lock);
 	if (dev->timeout_jiffies > 0) {
 		dev->timeout_happened = 1;
@@ -2203,9 +2213,14 @@ static int v4l2_loopback_init(struct v4l2_loopback_device *dev, int nr)
 	dev->buffer_size = 0;
 	dev->image = NULL;
 	dev->imagesize = 0;
+#ifdef HAVE_TIMER_SETUP
+	timer_setup(&dev->sustain_timer, sustain_timer_clb, 0);
+	timer_setup(&dev->timeout_timer, timeout_timer_clb, 0);
+#else
 	setup_timer(&dev->sustain_timer, sustain_timer_clb, nr);
-	dev->reread_count = 0;
 	setup_timer(&dev->timeout_timer, timeout_timer_clb, nr);
+#endif
+        dev->reread_count = 0;
 	dev->timeout_jiffies = 0;
 	dev->timeout_image = NULL;
 	dev->timeout_happened = 0;

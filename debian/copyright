@@ -1,11 +1,11 @@
-Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: v4l2loopback
 Upstream-Contact: IOhannes m zmölnig <zmoelnig@umlaeute.mur.at>
 Source: https://github.com/umlaeute/v4l2loopback/
 License: GPL-2+
 
 Files: *
-Copyright: 2010-2016, IOhannes m zmölnig <zmoelnig@iem.at>
+Copyright: 2010-2018, IOhannes m zmölnig <zmoelnig@iem.at>
  2005-2009, Vasily Levin
  2009, Gorinich Zmey
  2010, Scott Maines <smaines@alaya.com>
@@ -20,11 +20,14 @@ Copyright: 2010-2016, IOhannes m zmölnig <zmoelnig@iem.at>
  2013, Javier Infante <jabiinfante AT gmail DOT com>
  2014-2015, Tasos Sahanidis <tasos AT tasossah DOT com>
  2015, Kurt Kiefer
- 2015, Michel Promonet
+ 2015-2017, Michel Promonet
  2015, Paul Brook
  2015, Tom Zerucha
  2016, George Chriss
  2016, Gavin Qiu
+ 2016, Attila Tőkés <tokes_atti AT yahoo DOT com>
+ 2017, Todor Minchev <todor.minchev AT linux DOT intel DOT com>
+ 2018, Nick Sarnie <commendsarnex AT gmail DOT com>
 License: GPL-2+
 
 Files: examples/yuv4mpeg_to_v4l2.c
@@ -37,7 +40,7 @@ License: GPL-2+
 
 Files: debian/*
 Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
- 2010-2015, IOhannes m zmölnig <umlaeute@debian.org>
+ 2010-2018, IOhannes m zmölnig <umlaeute@debian.org>
 License: GPL-2+
 
 License: GPL-2+

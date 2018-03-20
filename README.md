@@ -23,8 +23,8 @@ please use the issue-tracker for reporting any problems
 # DEPENDENCIES
 the v4l2loopback module is a *kernel module*.
 in order to build it, you *must have* the kernel headers installed that match
-the linux kernel with which you want to use the module (in most this will be
-the kernel that you are currently running).
+the linux kernel with which you want to use the module (in most cases this will
+be the kernel that you are currently running).
 please note, that kernel headers and kernel image must have *exactly the same* version.
 for example, `3.18.0-trunk-rpi` is a different version that `3.18.7-v7+`, even though
 the first few number are the same.
@@ -45,6 +45,7 @@ all necessary permissions to install the module).
 if your system has "sudo", do:
 
     $ make && sudo make install
+    $ sudo depmod -a
 
 if your system lacks "sudo", do:
 
@@ -52,7 +53,13 @@ if your system lacks "sudo", do:
     $ su
     (enter root password)
     # make install
+    # depmod -a
     # exit
+
+
+(The `depmod -a` call will re-calculate module dependencies, in order to
+automatically load additional kernel modules required by v4l2loopback.
+The call may not be necessary on modern systems.)
 
 # RUN
 load the v4l2loopback module as root :
