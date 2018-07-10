@@ -1,0 +1,3 @@
+Test-Command: /usr/lib/dkms/dkms-autopkgtest
+Restrictions: needs-root, allow-stderr
+Depends: v4l2loopback-dkms, dkms

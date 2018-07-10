@@ -1,28 +1,8 @@
-control.in vs. control
-----------------------
-
-As is common with CDBS-based packaged, the debian/control file is
-generated (though not automatically) from debian/control.in
-Therefore, it is recommended to make any changes to the debian/control.in
-file and then regenerate the real debian/control using something like the
-following:
-
-    debian/rules clean DEB_MAINTAINER_MODE=1
-
-Please make sure to check the generated debian/control file (as someone might
-have committed changes directly to this file without updating debian/control.in
-- which might result in a loss of their changes)
-
- -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 13 Sep 2015
-20:11:02 +0200
-
-
 CDBS+git-buildpackage
 ---------------------
 
 This source package uses CDBS and git-buildpackage.  NMUs need not (but
-are encouraged to) make special use of these tools.  In particular, the
-debian/control.in file can be completely ignored.
+are encouraged to) make special use of these tools.
 
 More info here: http://wiki.debian.org/CDBS+git-buildpackage
 
