@@ -1,3 +1,10 @@
+v4l2loopback (0.12.0-3~exp1) experimental; urgency=medium
+
+  * Fixed dkms-autopkgtest
+  * Simplistic test for module-assistant
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Wed, 11 Jul 2018 18:15:34 +0200
+
 v4l2loopback (0.12.0-2) unstable; urgency=medium
 
   * Made build reproducible.
