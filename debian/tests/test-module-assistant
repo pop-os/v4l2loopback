@@ -1,8 +1,0 @@
-#!/bin/sh
-
-echo "JMZ: module-assistant test"
-dpkg -l v4l2loopback-source
-echo "JMZ: 1"
-module-assistant -vt prepare
-echo "JMZ: 2"
-module-assistant -vt build v4l2loopback

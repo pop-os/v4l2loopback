@@ -1,7 +1,7 @@
 Test-Command: /usr/lib/dkms/dkms-autopkgtest
-Restrictions: needs-root, allow-stderr
+Restrictions: needs-root, allow-stderr, flaky
 Depends: dkms
 
-Tests: test-module-assistant
+Test-Command: module-assistant -vt build v4l2loopback
 Restrictions: needs-root, allow-stderr
-Depends: module-assistant, v4l2loopback-source
+Depends: v4l2loopback-source, module-assistant, build-essential, g++, linux-headers-686-pae | linux-headers-amd64 | linux-headers-generic | linux-headers

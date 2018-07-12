@@ -1,3 +1,16 @@
+v4l2loopback (0.12.0-3~exp3) experimental; urgency=medium
+
+  * Mark dkms-test as "flaky"
+  * Have m-a test depends on g++
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 12 Jul 2018 23:01:23 +0200
+
+v4l2loopback (0.12.0-3~exp2) experimental; urgency=medium
+
+  * Simplified module-assistant test
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 12 Jul 2018 21:45:59 +0200
+
 v4l2loopback (0.12.0-3~exp1) experimental; urgency=medium
 
   * Fixed dkms-autopkgtest
