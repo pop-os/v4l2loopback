@@ -1,3 +1,10 @@
+v4l2loopback (0.12.0-3~exp4) experimental; urgency=medium
+
+  * Re-did DKMS test to no longer be flaky
+  * Fixed module-assistant to build with any kernel-headers
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Fri, 13 Jul 2018 10:20:28 +0200
+
 v4l2loopback (0.12.0-3~exp3) experimental; urgency=medium
 
   * Mark dkms-test as "flaky"
