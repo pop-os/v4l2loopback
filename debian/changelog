@@ -1,3 +1,10 @@
+v4l2loopback (0.12.0-3~exp5) experimental; urgency=medium
+
+  * Fixed typo in module-assistant invocation
+  * DKMS tests require "recommended" packages
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Sun, 15 Jul 2018 21:46:21 +0200
+
 v4l2loopback (0.12.0-3~exp4) experimental; urgency=medium
 
   * Re-did DKMS test to no longer be flaky

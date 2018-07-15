@@ -1,7 +1,7 @@
 Tests: dkms-autopkgtest
-Restrictions: needs-root, allow-stderr
+Restrictions: needs-recommends, needs-root, allow-stderr
 Depends: v4l2loopback-dkms
 
-Test-Command: module-assistant -text-mode --verbose --kernel-dir "$(echo  --kvers-list none build v4l2loopback /usr/src/linux-headers-*)" --kvers-list none build v4l2loopback
+Test-Command: module-assistant --text-mode --verbose --kernel-dir "$(echo  --kvers-list none build v4l2loopback /usr/src/linux-headers-*)" --kvers-list none build v4l2loopback
 Restrictions: needs-root, allow-stderr
 Depends: v4l2loopback-source, module-assistant, build-essential, g++, linux-headers-686-pae | linux-headers-amd64 | linux-headers-generic | linux-headers
