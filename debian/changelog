@@ -1,3 +1,9 @@
+v4l2loopback (0.12.0-3) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Mon, 16 Jul 2018 11:25:15 +0200
+
 v4l2loopback (0.12.0-3~exp5) experimental; urgency=medium
 
   * Fixed typo in module-assistant invocation
