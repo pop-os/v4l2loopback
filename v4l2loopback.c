@@ -3,7 +3,7 @@
  * v4l2loopback.c  --  video4linux2 loopback driver
  *
  * Copyright (C) 2005-2009 Vasily Levin (vasaka@gmail.com)
- * Copyright (C) 2010-2018 IOhannes m zmoelnig (zmoelnig@iem.at)
+ * Copyright (C) 2010-2019 IOhannes m zmoelnig (zmoelnig@iem.at)
  * Copyright (C) 2011 Stefan Diewald (stefan.diewald@mytum.de)
  * Copyright (C) 2012 Anton Novikov (random.plant@gmail.com)
  *
@@ -40,7 +40,7 @@
 #define HAVE_TIMER_SETUP
 #endif
 
-#define V4L2LOOPBACK_VERSION_CODE KERNEL_VERSION(0, 12, 0)
+#define V4L2LOOPBACK_VERSION_CODE KERNEL_VERSION(0, 12, 1)
 
 MODULE_DESCRIPTION("V4L2 loopback video device");
 MODULE_AUTHOR("Vasily Levin, " \
@@ -879,7 +879,6 @@ static int vidioc_enum_fmt_out(struct file *file, void *fh, struct v4l2_fmtdesc 
 
 		f->pixelformat = dev->pix_format.pixelformat;
 	} else {
-		__u32 format;
 		/* fill in a dummy format */
                 /* coverity[unsigned_compare] */
 		if (f->index < 0 || f->index >= FORMATS)
@@ -888,9 +887,6 @@ static int vidioc_enum_fmt_out(struct file *file, void *fh, struct v4l2_fmtdesc 
 		fmt = &formats[f->index];
 
 		f->pixelformat = fmt->fourcc;
-		format = f->pixelformat;
-
-		/* strlcpy(f->description, "dummy OUT format", sizeof(f->description)); */
 		snprintf(f->description, sizeof(f->description), "%s", fmt->name);
 
 	}
@@ -908,12 +904,9 @@ static int vidioc_enum_fmt_out(struct file *file, void *fh, struct v4l2_fmtdesc 
 static int vidioc_g_fmt_out(struct file *file, void *priv, struct v4l2_format *fmt)
 {
 	struct v4l2_loopback_device *dev;
-	struct v4l2_loopback_opener *opener;
-
 	MARK();
 
 	dev = v4l2loopback_getdevice(file);
-	opener = file->private_data;
 
 	/*
 	 * LATER: this should return the currently valid format
@@ -1513,7 +1506,7 @@ static int vidioc_qbuf(struct file *file, void *private_data, struct v4l2_buffer
 	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
 		dprintkrw("output QBUF pos: %d index: %d\n", dev->write_position, index);
 		if (buf->timestamp.tv_sec == 0 && buf->timestamp.tv_usec == 0)
-			do_gettimeofday(&b->buffer.timestamp);
+			v4l2_get_timestamp(&b->buffer.timestamp);
 		else
 			b->buffer.timestamp = buf->timestamp;
 		b->buffer.bytesused = buf->bytesused;
@@ -1638,7 +1631,6 @@ static int vidioc_streamon(struct file *file, void *private_data, enum v4l2_buf_
 {
 	struct v4l2_loopback_device *dev;
 	struct v4l2_loopback_opener *opener;
-	int ret;
 	MARK();
 
 	dev = v4l2loopback_getdevice(file);
@@ -1649,7 +1641,7 @@ static int vidioc_streamon(struct file *file, void *private_data, enum v4l2_buf_
 		opener->type = WRITER;
 		dev->ready_for_output = 0;
 		if (!dev->ready_for_capture) {
-			ret = allocate_buffers(dev);
+			int ret = allocate_buffers(dev);
 			if (ret < 0)
 				return ret;
 			dev->ready_for_capture = 1;
@@ -1663,6 +1655,7 @@ static int vidioc_streamon(struct file *file, void *private_data, enum v4l2_buf_
 	default:
 		return -EINVAL;
 	}
+        return -EINVAL;
 }
 
 /* stop streaming
@@ -1716,7 +1709,6 @@ static struct vm_operations_struct vm_ops = {
 
 static int v4l2_loopback_mmap(struct file *file, struct vm_area_struct *vma)
 {
-	int i;
 	unsigned long addr;
 	unsigned long start;
 	unsigned long size;
@@ -1756,6 +1748,7 @@ static int v4l2_loopback_mmap(struct file *file, struct vm_area_struct *vma)
 		buffer = &dev->timeout_image_buffer;
 		addr = (unsigned long)dev->timeout_image;
 	} else {
+		int i;
 		for (i = 0; i < dev->buffers_number; ++i) {
 			buffer = &dev->buffers[i];
 			if ((buffer->buffer.m.offset >> PAGE_SHIFT) == vma->vm_pgoff)
@@ -1885,12 +1878,10 @@ static ssize_t v4l2_loopback_read(struct file *file,
 		char __user *buf, size_t count, loff_t *ppos)
 {
 	int read_index;
-	struct v4l2_loopback_opener *opener;
 	struct v4l2_loopback_device *dev;
 	struct v4l2_buffer *b;
 	MARK();
 
-	opener = file->private_data;
 	dev    = v4l2loopback_getdevice(file);
 
 	read_index = get_capture_buffer(file);
@@ -1916,7 +1907,6 @@ static ssize_t v4l2_loopback_write(struct file *file,
 	struct v4l2_loopback_device *dev;
 	int write_index;
 	struct v4l2_buffer *b;
-	int ret;
 	MARK();
 
 	dev = v4l2loopback_getdevice(file);
@@ -1925,7 +1915,7 @@ static ssize_t v4l2_loopback_write(struct file *file,
 	dev->ready_for_output = 0;
 
 	if (!dev->ready_for_capture) {
-		ret = allocate_buffers(dev);
+		int ret = allocate_buffers(dev);
 		if (ret < 0)
 			return ret;
 		dev->ready_for_capture = 1;
@@ -1943,7 +1933,7 @@ static ssize_t v4l2_loopback_write(struct file *file,
 			count);
 		return -EFAULT;
 	}
-	do_gettimeofday(&b->timestamp);
+	v4l2_get_timestamp(&b->timestamp);
 	b->bytesused = count;
 	b->sequence = dev->write_position;
 	buffer_written(dev, &dev->buffers[write_index]);
@@ -2048,7 +2038,7 @@ static void init_buffers(struct v4l2_loopback_device *dev)
 		b->timestamp.tv_usec = 0;
 		b->type              = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 
-		do_gettimeofday(&b->timestamp);
+		v4l2_get_timestamp(&b->timestamp);
 	}
 	dev->timeout_image_buffer = dev->buffers[0];
 	dev->timeout_image_buffer.buffer.m.offset = MAX_BUFFERS * buffer_size;
@@ -2364,7 +2354,6 @@ static void free_devices(void)
 
 static int __init v4l2loopback_init_module(void)
 {
-	int ret;
 	int i;
 	MARK();
 
@@ -2407,6 +2396,7 @@ static int __init v4l2loopback_init_module(void)
 
 	/* kfree on module release */
 	for (i = 0; i < devices; i++) {
+		int ret;
 		dprintk("creating v4l2loopback-device #%d\n", i);
 		devs[i] = kzalloc(sizeof(*devs[i]), GFP_KERNEL);
 		if (devs[i] == NULL) {

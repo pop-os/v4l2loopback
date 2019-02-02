@@ -97,8 +97,8 @@ int main(int argc, char**argv)
 	struct v4l2_capability vid_caps;
 	struct v4l2_format vid_format;
 
-	size_t framesize;
-	size_t linewidth;
+	size_t framesize = 0;
+	size_t linewidth = 0;
 
 	__u8*buffer;
 	__u8*check_buffer;
@@ -139,7 +139,7 @@ int main(int argc, char**argv)
 
 	assert(ret_code != -1);
 
-	if(debug)printf("frame: format=%d\tsize=%d\n", FRAME_FORMAT, framesize);
+	if(debug)printf("frame: format=%d\tsize=%lu\n", FRAME_FORMAT, framesize);
   print_format(&vid_format);
 
 	if(!format_properties(vid_format.fmt.pix.pixelformat,

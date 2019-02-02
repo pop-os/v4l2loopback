@@ -10,7 +10,7 @@ set -eu
 purge_adt_artifacts=no
 if [ -z ${ADT_ARTIFACTS+x} ]; then
   ADT_ARTIFACTS=$(mktemp -d)
-  echo "I: created temporaray ARTIFACTS directory ${ADT_ARTIFACTS}"
+  echo "I: created temporaray ARTIFACTS directory ${AUTOPKGTEST_ARTIFACTS}"
   purge_adt_artifacts=yes
 fi
 
@@ -24,7 +24,7 @@ run_pkg() {
 
     # collect build logs as artifacts
     if [ -d /var/lib/dkms ]; then
-        (cd /var/lib/dkms; find -name "make.log" -print0 | xargs -0 tar c | echo "") > "$ADT_ARTIFACTS/$pkg-make-logs.tar"
+        (cd /var/lib/dkms; find -name "make.log" -print0 | xargs -0 tar c | echo "") > "$AUTOPKGTEST_ARTIFACTS/$pkg-make-logs.tar"
     fi
 
     echo "I: Testing binary package $pkg"
@@ -59,6 +59,6 @@ for pkg in $pkgs; do
 done
 
 if [ "x${purge_adt_artifacts}" = "xyes" ]; then
-  rm -rf "${ADT_ARTIFACTS}"
+  rm -rf "${AUTOPKGTEST_ARTIFACTS}"
 fi
 
