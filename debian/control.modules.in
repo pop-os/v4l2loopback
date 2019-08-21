@@ -3,8 +3,8 @@ Section: graphics
 Priority: optional
 Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
 Homepage: https://github.com/umlaeute/v4l2loopback
-Build-Depends: debhelper
-Standards-Version: 4.3.0
+Build-Depends: debhelper-compat (= 12),
+Standards-Version: 4.4.0
 
 Package: v4l2loopback-modules-_KVERS_
 Architecture: any

@@ -1,3 +1,24 @@
+v4l2loopback (0.12.2-1) unstable; urgency=medium
+
+  * New upstream version 0.12.2
+
+  * Drop versioned B-Ds where version is satisfied in oldoldstable
+  * Switched build-system from CDBS to DH
+    * Install TODO
+    * Use symlinks to get additional documentation for all binary packages
+  * Update autopkgtests
+    * Explicit Depends on autopkgtests
+    * Drop obsolete "needs-recommmends" restriction
+    * Add "isolation-machine" restriction
+      (Closes: #934709)
+    * Use a script for module-assistant autopkgtest
+  * Bump dh-compat to 12
+    * Use debhelper-compat instead of d/compat
+    * Use dh_prep rather than "dh_clean -k"
+  * Bump standards version to 4.4.0
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Wed, 21 Aug 2019 11:59:27 +0200
+
 v4l2loopback (0.12.1-1) unstable; urgency=medium
 
   * New upstream version 0.12.1

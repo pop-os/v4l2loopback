@@ -12,10 +12,10 @@ kdist_config: prep-deb-files
 binary-modules: kdist_config
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	# Build modules
 	$(MAKE) -C $(CURDIR) v4l2loopback \
-	KERNEL_DIR=$(KSRC) KERNEL_VERSION=$(KVERS) KERNELCONF=$(KSRC)/.config 
+	KERNEL_DIR=$(KSRC) KERNEL_VERSION=$(KVERS) KERNELCONF=$(KSRC)/.config
 	# Install modules
 	$(MAKE) -C $(CURDIR) install \
 	KERNEL_DIR=$(KSRC) KERNEL_VERSION=$(KVERS) KERNELCONF=$(KSRC)/.config \
@@ -39,4 +39,4 @@ kdist_clean:
 	dh_testroot
 	dh_clean
 	$(MAKE) -C $(CURDIR) clean \
-	KERNELPATH=$(KSRC) KERNELRELEASE=$(KVERS) KERNELCONF=$(KSRC)/.config 
+	KERNELPATH=$(KSRC) KERNELRELEASE=$(KVERS) KERNELCONF=$(KSRC)/.config

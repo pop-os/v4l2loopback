@@ -1,64 +1,48 @@
 #!/usr/bin/make -f
-# -*- mode: makefile; coding: utf-8 -*-
-# Copyright © 2008 Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
-# Copyright © 2010-2014 IOhannes m zmölnig <umlaeute@debian.org>
-# Description: Main Debian packaging script for v4l2loopback-sorce
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation; either version 2, or (at
-# your option) any later version.
-#
-# This program is distributed in the hope that it will be useful, but
-# WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-# General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+# -*- makefile -*-
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/rules/utils.mk
+include /usr/share/dpkg/pkg-info.mk
 
-BUILD_DATE := $(shell dpkg-parsechangelog --show-field Date)
+name = $(DEB_SOURCE)
+version	 = $(DEB_VERSION_UPSTREAM)
 
-install/v4l2loopback-source::
+%:
+	dh $@ --with dkms
 
-	# install source code and create directory
-	install -D -m 0755  Makefile \
-		debian/tmp/modules/v4l2loopback/Makefile
-	install -m 0644  v4l2loopback.c v4l2loopback_formats.h \
-		debian/tmp/modules/v4l2loopback/
-	install -m 0644  README.md NEWS AUTHORS ChangeLog \
-		debian/tmp/modules/v4l2loopback/
+build:
+	@echo "=============== BUILD =============="
 
-	# Enforce executable bit on debian/rules, and create directory
-	# structure for modules source
-	install -D -m 0755 debian/rules.modules \
-		debian/tmp/modules/v4l2loopback/debian/rules
-	# Prepare the other debian stuff
-	for f in *.modules.in control compat copyright changelog docs README.Debian; do \
-		install -m 0644 debian/$$f \
-			debian/tmp/modules/v4l2loopback/debian/; \
+override_dh_auto_build:
+
+override_dh_auto_clean:
+	rm -f man/v4l2loopback-ctl.1
+
+override_dh_installman:
+	help2man -N --name "control v4l2 loopback devices" utils/v4l2loopback-ctl > man/v4l2loopback-ctl.1
+	dh_installman
+
+override_dh_dkms:
+	dh_dkms -p$(name)-dkms -V $(version)
+
+override_dh_auto_install:
+	# v4l2loopback-dkms
+	dh_installdirs -p$(name)-dkms usr/src/$(name)-$(version)
+	dh_install -p$(name)-dkms Makefile usr/src/$(name)-$(version)
+	dh_install -p$(name)-dkms *.[chS]  usr/src/$(name)-$(version)
+	# bbswitch-source (for use with module-assistant)
+	dh_installdirs -p$(name)-source usr/src/modules/$(name)/debian
+	dh_install -p$(name)-source Makefile usr/src/modules/$(name)
+	dh_install -p$(name)-source *.[chS] usr/src/modules/$(name)
+	dh_install -p$(name)-source README.md NEWS AUTHORS ChangeLog TODO usr/src/modules/$(name)
+	install -D -m 0755 debian/rules.modules debian/$(name)-source/usr/src/modules/$(name)/debian/rules
+	for file in control.modules.in control copyright changelog docs README.Debian; do \
+		install -m 644 debian/$$file debian/$(name)-source/usr/src/modules/$(name)/debian/; \
 	done
-	# Prepare the debian source tarball
-	tar --sort=name -jcf debian/v4l2loopback-source/usr/src/v4l2loopback.tar.bz2 \
-		--owner=0 --group=0 --numeric-owner \
-		-C debian/tmp --mtime="$(BUILD_DATE)" modules
-
-install/v4l2loopback-dkms::
-	# Create the v4l2loopback-dkms package.
-	dh_install -p$(cdbs_curpkg) Makefile usr/src/$(DEB_SOURCE_PACKAGE)-$(DEB_UPSTREAM_VERSION)
-	dh_install -p$(cdbs_curpkg) *.[chS]  usr/src/$(DEB_SOURCE_PACKAGE)-$(DEB_UPSTREAM_VERSION)
-	dh_dkms -p$(cdbs_curpkg)
-
-## building manpages
-manpages=man/v4l2loopback-ctl.1
-build/v4l2loopback-utils:: $(manpages)
-clean:: clean-manpages
-
-.PHONY: clean-manpages
-clean-manpages:
-	rm -f $(manpages)
-man/v4l2loopback-ctl.1: utils/v4l2loopback-ctl
-	help2man -N --name "control v4l2 loopback devices" $^ > $@
+	tar cfj debian/$(name)-source/usr/src/$(name).tar.bz2 \
+		--owner=root --group=src --mode=go=rX,u+rw,a-s --numeric-owner \
+		--sort=name  --mtime="@$(SOURCE_DATE_EPOCH)" \
+		-C debian/$(name)-source/usr/src \
+		modules
+	rm -rf debian/$(name)-source/usr/src/modules
