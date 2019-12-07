@@ -1,7 +1,15 @@
+---
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 ### Step 1: Read this
 
-Thanks for your feedback. It is invaluable for making `v4l2loopback` a better
-software.
+Thanks for your feedback. It is invaluable for making `v4l2loopback` a better software.
 
 To help us making the most of your feedback (so we can e.g. fix bugs more quickly), please make sure to provide the information requested in this template.
 Also make sure to remove any non-relevant parts (so we can focus on the essential problem).
@@ -65,4 +73,3 @@ So, to make the web a better place, we ask you to post *text* rather than *scree
   ```
   // TODO(you): code here to reproduce the problem
   ```
-

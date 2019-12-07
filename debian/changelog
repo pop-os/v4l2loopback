@@ -1,3 +1,11 @@
+v4l2loopback (0.12.3-1) unstable; urgency=medium
+
+  * New upstream version 0.12.3
+  * Refresh d/copyright
+  * Bump standards-version to 4.4.1
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Sat, 07 Dec 2019 19:26:02 +0100
+
 v4l2loopback (0.12.2-1) unstable; urgency=medium
 
   * New upstream version 0.12.2

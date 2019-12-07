@@ -5,7 +5,7 @@ Source: https://github.com/umlaeute/v4l2loopback/
 License: GPL-2+
 
 Files: *
-Copyright: 2010-2018, IOhannes m zmölnig <zmoelnig@iem.at>
+Copyright: 2010-2019, IOhannes m zmölnig <zmoelnig@iem.at>
  2005-2009, Vasily Levin
  2009, Gorinich Zmey
  2010, Scott Maines <smaines@alaya.com>
@@ -28,6 +28,7 @@ Copyright: 2010-2018, IOhannes m zmölnig <zmoelnig@iem.at>
  2016, Attila Tőkés <tokes_atti AT yahoo DOT com>
  2017, Todor Minchev <todor.minchev AT linux DOT intel DOT com>
  2018, Nick Sarnie <commendsarnex AT gmail DOT com>
+ 2019, Ricardo Ribalda Delgado <ricardo AT ribalda DOT com>
 License: GPL-2+
 
 Files: examples/yuv4mpeg_to_v4l2.c

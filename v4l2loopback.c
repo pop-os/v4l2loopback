@@ -40,7 +40,7 @@
 #define HAVE_TIMER_SETUP
 #endif
 
-#define V4L2LOOPBACK_VERSION_CODE KERNEL_VERSION(0, 12, 2)
+#define V4L2LOOPBACK_VERSION_CODE KERNEL_VERSION(0, 12, 3)
 
 MODULE_DESCRIPTION("V4L2 loopback video device");
 MODULE_AUTHOR("Vasily Levin, " \
@@ -2088,6 +2088,15 @@ static void init_vdev(struct video_device *vdev, int nr)
 	vdev->ioctl_ops    = &v4l2_loopback_ioctl_ops;
 	vdev->release      = &video_device_release;
 	vdev->minor        = -1;
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 7, 0)
+	vdev->device_caps  =
+		V4L2_CAP_DEVICE_CAPS |
+#ifdef V4L2_CAP_VIDEO_M2M
+		V4L2_CAP_VIDEO_M2M |
+#endif
+                V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_VIDEO_OUTPUT |
+                V4L2_CAP_READWRITE | V4L2_CAP_STREAMING;
+#endif
 	if (debug > 1)
 		#if LINUX_VERSION_CODE < KERNEL_VERSION(3, 20, 0)
 			vdev->debug = V4L2_DEBUG_IOCTL | V4L2_DEBUG_IOCTL_ARG;
