@@ -91,6 +91,7 @@ option, when loading the module; e.g.
     # modprobe v4l2loopback devices=4
 
 will give you 4 loopback devices (e.g. `/dev/video1` ... `/dev/video5`)
+
 you can also specify the device IDs manually; e.g.
 
     # modprobe v4l2loopback video_nr=3,4,7
@@ -104,6 +105,17 @@ will create 3 devices with the card names passed as the second parameter:
 - `/dev/video4` -> *the number four*
 - `/dev/video7` -> *the last one*
 
+
+if you encounter problems detecting your device with Chrome/WebRTC you can try 'exclusive_caps' mode:
+
+    # modprobe v4l2loopback exclusive_caps=1
+    
+will enable 'exclusive_caps' mode that only reports CAPTURE/OUTPUT capabilities exclusively.
+the newly created device will announce OUTPUT capabilities only (so ordinary webcam applications
+(including Chrome) won't see it). as soon as you have attached a producer to the device, it will
+start announcing CAPTURE capabilities only (so applications that refuse to open devices that have
+other capabilities apart from capturing can open it too.)
+   
 # ATTRIBUTES
 you can set and/or query some per-device attributes via sysfs, in a human
 readable format. see `/sys/devices/virtual/video4linux/video*/`
