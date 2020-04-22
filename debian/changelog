@@ -1,3 +1,11 @@
+v4l2loopback (0.12.5-1) unstable; urgency=medium
+
+  * New upstream version 0.12.5
+  * Add salsa-ci configuration
+  * Drop outdated d/README.Debian
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Wed, 22 Apr 2020 16:36:06 +0200
+
 v4l2loopback (0.12.4-1) unstable; urgency=medium
 
   * New upstream version 0.12.4

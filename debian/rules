@@ -37,7 +37,7 @@ override_dh_auto_install:
 	dh_install -p$(name)-source *.[chS] usr/src/modules/$(name)
 	dh_install -p$(name)-source README.md NEWS AUTHORS ChangeLog TODO usr/src/modules/$(name)
 	install -D -m 0755 debian/rules.modules debian/$(name)-source/usr/src/modules/$(name)/debian/rules
-	for file in control.modules.in control copyright changelog docs README.Debian; do \
+	for file in control.modules.in control copyright changelog docs; do \
 		install -m 644 debian/$$file debian/$(name)-source/usr/src/modules/$(name)/debian/; \
 	done
 	tar cfj debian/$(name)-source/usr/src/$(name).tar.bz2 \

@@ -40,7 +40,11 @@
 #define HAVE_TIMER_SETUP
 #endif
 
-#define V4L2LOOPBACK_VERSION_CODE KERNEL_VERSION(0, 12, 4)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(5, 7, 0)
+# define VFL_TYPE_VIDEO VFL_TYPE_GRABBER
+#endif
+
+#define V4L2LOOPBACK_VERSION_CODE KERNEL_VERSION(0, 12, 5)
 
 MODULE_DESCRIPTION("V4L2 loopback video device");
 MODULE_AUTHOR("Vasily Levin, " \
@@ -667,43 +671,36 @@ static int vidioc_querycap(struct file *file, void *priv, struct v4l2_capability
 {
 	struct v4l2_loopback_device *dev = v4l2loopback_getdevice(file);
 	int devnr = ((struct v4l2loopback_private *)video_get_drvdata(dev->vdev))->devicenr;
+        __u32 capabilities = V4L2_CAP_STREAMING | V4L2_CAP_READWRITE;
 
 	strlcpy(cap->driver, "v4l2 loopback", sizeof(cap->driver));
-
 	vidioc_fill_name(cap->card, sizeof(cap->card), devnr);
-
 	snprintf(cap->bus_info, sizeof(cap->bus_info), "platform:v4l2loopback-%03d", devnr);
 
 #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 1, 0)
 	/* since 3.1.0, the v4l2-core system is supposed to set the version */
 	cap->version = V4L2LOOPBACK_VERSION_CODE;
 #endif
-	cap->capabilities =
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 19, 0)
-		V4L2_CAP_DEVICE_CAPS |
-#endif
-		V4L2_CAP_STREAMING | V4L2_CAP_READWRITE;
 
 #ifdef V4L2_CAP_VIDEO_M2M
-	cap->capabilities |= V4L2_CAP_VIDEO_M2M;
+	capabilities |= V4L2_CAP_VIDEO_M2M;
 #endif /* V4L2_CAP_VIDEO_M2M */
+
 	if (dev->announce_all_caps) {
-		cap->capabilities |= V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_VIDEO_OUTPUT;
+		capabilities |= V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_VIDEO_OUTPUT;
 	} else {
 
 		if (dev->ready_for_capture) {
-			cap->capabilities |= V4L2_CAP_VIDEO_CAPTURE;
+			capabilities |= V4L2_CAP_VIDEO_CAPTURE;
 		}
 		if (dev->ready_for_output) {
-			cap->capabilities |= V4L2_CAP_VIDEO_OUTPUT;
+			capabilities |= V4L2_CAP_VIDEO_OUTPUT;
 		}
 	}
-#if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 19, 0)
-	cap->device_caps = (cap->capabilities & ~V4L2_CAP_DEVICE_CAPS);
-#endif
+
+	dev->vdev->device_caps = cap->device_caps = cap->capabilities = capabilities;
 
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3, 3, 0)
-	cap->device_caps = cap->capabilities;
 	cap->capabilities |= V4L2_CAP_DEVICE_CAPS;
 #endif
 
@@ -2083,7 +2080,7 @@ static void init_vdev(struct video_device *vdev, int nr)
 	vdev->tvnorms      = V4L2_STD_ALL;
 #endif /* V4L2LOOPBACK_WITH_STD */
 
-	vdev->vfl_type     = VFL_TYPE_GRABBER;
+	vdev->vfl_type     = VFL_TYPE_VIDEO;
 	vdev->fops         = &v4l2_loopback_fops;
 	vdev->ioctl_ops    = &v4l2_loopback_ioctl_ops;
 	vdev->release      = &video_device_release;
@@ -2432,7 +2429,7 @@ static int __init v4l2loopback_init_module(void)
 			return ret;
 		}
 		/* register the device -> it creates /dev/video* */
-		if (video_register_device(devs[i]->vdev, VFL_TYPE_GRABBER, video_nr[i]) < 0) {
+		if (video_register_device(devs[i]->vdev, VFL_TYPE_VIDEO, video_nr[i]) < 0) {
 			video_device_release(devs[i]->vdev);
 			printk(KERN_ERR "v4l2loopback: failed video_register_device()\n");
 			free_devices();
