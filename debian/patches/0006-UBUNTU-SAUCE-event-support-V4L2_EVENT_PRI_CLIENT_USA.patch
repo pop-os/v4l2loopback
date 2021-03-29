@@ -1,0 +1,127 @@
+From: You-Sheng Yang <vicamo.yang@canonical.com>
+Date: Thu, 13 Aug 2020 23:21:05 +0800
+Subject: UBUNTU: SAUCE: event: support
+ V4L2_EVENT_PRI_CLIENT_USAGE
+
+Signed-off-by: You-Sheng Yang <vicamo.yang@canonical.com>
+---
+ v4l2loopback.c | 63 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 62 insertions(+), 1 deletion(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 504fb61..3cea842 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -605,6 +605,14 @@ static void v4l2loopback_create_sysfs(struct video_device *vdev)
+ 	dev_err(&vdev->dev, "%s error: %d\n", __func__, res);
+ }
+ 
++/* Event APIs */
++
++#define V4L2_EVENT_PRI_CLIENT_USAGE  V4L2_EVENT_PRIVATE_START
++
++struct v4l2_event_client_usage {
++	__u32 count;
++};
++
+ /* global module data */
+ struct v4l2_loopback_device *devs[MAX_DEVICES];
+ 
+@@ -637,6 +645,7 @@ static struct v4l2_loopback_device *v4l2loopback_getdevice(struct file *f)
+ }
+ 
+ /* forward declarations */
++static void client_usage_queue_event(struct video_device *vdev);
+ static void init_buffers(struct v4l2_loopback_device *dev);
+ static int allocate_buffers(struct v4l2_loopback_device *dev);
+ static int free_buffers(struct v4l2_loopback_device *dev);
+@@ -1675,6 +1684,7 @@ static int vidioc_streamon(struct file *file, void *fh, enum v4l2_buf_type type)
+ 			return -EIO;
+ 		opener->type = READER;
+ 		dev->active_readers++;
++		client_usage_queue_event(dev->vdev);
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
+@@ -1703,6 +1713,7 @@ static int vidioc_streamoff(struct file *file, void *fh,
+ 		if (opener->type == READER) {
+ 			opener->type = 0;
+ 			dev->active_readers--;
++			client_usage_queue_event(dev->vdev);
+ 		}
+ 		break;
+ 	default:
+@@ -1727,6 +1738,52 @@ static int vidiocgmbuf(struct file *file, void *fh, struct video_mbuf *p)
+ }
+ #endif
+ 
++static void client_usage_queue_event(struct video_device *vdev)
++{
++	struct v4l2_event ev;
++	struct v4l2_loopback_device *dev;
++
++	dev = container_of(vdev->v4l2_dev,
++			   struct v4l2_loopback_device, v4l2_dev);
++
++	memset(&ev, 0, sizeof(ev));
++	ev.type = V4L2_EVENT_PRI_CLIENT_USAGE;
++	((struct v4l2_event_client_usage*)&ev.u)->count =
++		dev->active_readers;
++
++	v4l2_event_queue(vdev, &ev);
++}
++
++static int client_usage_ops_add(struct v4l2_subscribed_event *sev,
++				unsigned elems)
++{
++	if (!(sev->flags & V4L2_EVENT_SUB_FL_SEND_INITIAL))
++		return 0;
++
++	client_usage_queue_event(sev->fh->vdev);
++	return 0;
++}
++
++static void client_usage_ops_replace(struct v4l2_event *old,
++				     const struct v4l2_event *new)
++{
++	*((struct v4l2_event_client_usage*)&old->u) =
++		*((struct v4l2_event_client_usage*)&new->u);
++}
++
++static void client_usage_ops_merge(const struct v4l2_event *old,
++				   struct v4l2_event *new)
++{
++	*((struct v4l2_event_client_usage*)&new->u) =
++		*((struct v4l2_event_client_usage*)&old->u);
++}
++
++const struct v4l2_subscribed_event_ops client_usage_ops = {
++	.add = client_usage_ops_add,
++	.replace = client_usage_ops_replace,
++	.merge = client_usage_ops_merge,
++};
++
+ static int vidioc_subscribe_event(struct v4l2_fh *fh,
+ 				  const struct v4l2_event_subscription *sub)
+ {
+@@ -1734,6 +1791,8 @@ static int vidioc_subscribe_event(struct v4l2_fh *fh,
+ 	{
+ 	case V4L2_EVENT_CTRL:
+ 		return v4l2_ctrl_subscribe_event(fh, sub);
++	case V4L2_EVENT_PRI_CLIENT_USAGE:
++		return v4l2_event_subscribe(fh, sub, 0, &client_usage_ops);
+ 	}
+ 
+ 	return -EINVAL;
+@@ -1950,8 +2009,10 @@ static int v4l2_loopback_close(struct file *file)
+ 	kfree(opener);
+ 	if (is_writer)
+ 		dev->ready_for_output = 1;
+-	if (is_reader)
++	if (is_reader) {
+ 		dev->active_readers--;
++		client_usage_queue_event(dev->vdev);
++	}
+ 	MARK();
+ 	return 0;
+ }

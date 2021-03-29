@@ -1,0 +1,63 @@
+From: You-Sheng Yang <vicamo.yang@canonical.com>
+Date: Wed, 16 Sep 2020 18:35:09 +0800
+Subject: event: support polling for events
+
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+(cherry picked from commit 64795fd1cfa7d6fc15154c6184d8789f8573e2b4)
+Signed-off-by: You-Sheng Yang <vicamo.yang@canonical.com>
+---
+ v4l2loopback.c | 27 +++++++++++++++++++++------
+ 1 file changed, 21 insertions(+), 6 deletions(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 8ae18d1..9d39311 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -1817,26 +1817,41 @@ static unsigned int v4l2_loopback_poll(struct file *file, struct poll_table_stru
+ {
+ 	struct v4l2_loopback_opener *opener;
+ 	struct v4l2_loopback_device *dev;
++	__poll_t req_events = poll_requested_events(pts);
+ 	int ret_mask = 0;
+ 	MARK();
+ 
+ 	opener = fh_to_opener(file->private_data);
+ 	dev    = v4l2loopback_getdevice(file);
+ 
++	if (req_events & EPOLLPRI) {
++		if (!v4l2_event_pending(&opener->fh))
++			poll_wait(file, &opener->fh.wait, pts);
++		if (v4l2_event_pending(&opener->fh)) {
++			ret_mask |= EPOLLPRI;
++			if (!(req_events & DEFAULT_POLLMASK))
++				return ret_mask;
++		}
++	}
++
+ 	switch (opener->type) {
+ 	case WRITER:
+-		ret_mask = POLLOUT | POLLWRNORM;
++		ret_mask |= EPOLLOUT | EPOLLWRNORM;
+ 		break;
+ 	case READER:
+-		poll_wait(file, &dev->read_event, pts);
++		if (!can_read(dev, opener)) {
++			if (ret_mask)
++				return ret_mask;
++			poll_wait(file, &dev->read_event, pts);
++		}
+ 		if (can_read(dev, opener))
+-			ret_mask =  POLLIN | POLLRDNORM;
++			ret_mask |= EPOLLIN | EPOLLRDNORM;
++		if (v4l2_event_pending(&opener->fh))
++			ret_mask |= EPOLLPRI;
+ 		break;
+-	default:
+-		ret_mask = -POLLERR;
+ 	}
+-	MARK();
+ 
++	MARK();
+ 	return ret_mask;
+ }
+ 

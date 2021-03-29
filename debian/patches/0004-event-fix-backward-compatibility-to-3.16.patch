@@ -1,0 +1,73 @@
+From: You-Sheng Yang <vicamo.yang@canonical.com>
+Date: Wed, 16 Sep 2020 18:35:09 +0800
+Subject: event: fix backward compatibility to 3.16
+
+3.16 is the oldest kernel known working, and it fails on 3.13 due to
+incompatibility introduced by IDR.
+
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+(cherry picked from commit afd4348f287a3db23957d820b128a5b010fff576)
+Signed-off-by: You-Sheng Yang <vicamo.yang@canonical.com>
+---
+ v4l2loopback.c | 16 +++++++++++-----
+ 1 file changed, 11 insertions(+), 5 deletions(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 9d39311..4bd1252 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -21,6 +21,9 @@
+ #include <linux/videodev2.h>
+ #include <linux/sched.h>
+ #include <linux/slab.h>
++#include <linux/fs.h>
++#include <linux/capability.h>
++#include <linux/eventpoll.h>
+ #include <media/v4l2-ioctl.h>
+ #include <media/v4l2-common.h>
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 29)
+@@ -153,6 +156,9 @@ static inline void v4l2l_get_timestamp(struct v4l2_buffer *b) {
+ 	b->timestamp.tv_usec = (ts.tv_nsec / NSEC_PER_USEC);
+ }
+ 
++#if !defined(__poll_t)
++typedef unsigned __poll_t;
++#endif
+ 
+ /* module constants
+  *  can be overridden during he build process using something like
+@@ -1824,11 +1830,11 @@ static unsigned int v4l2_loopback_poll(struct file *file, struct poll_table_stru
+ 	opener = fh_to_opener(file->private_data);
+ 	dev    = v4l2loopback_getdevice(file);
+ 
+-	if (req_events & EPOLLPRI) {
++	if (req_events & POLLPRI) {
+ 		if (!v4l2_event_pending(&opener->fh))
+ 			poll_wait(file, &opener->fh.wait, pts);
+ 		if (v4l2_event_pending(&opener->fh)) {
+-			ret_mask |= EPOLLPRI;
++			ret_mask |= POLLPRI;
+ 			if (!(req_events & DEFAULT_POLLMASK))
+ 				return ret_mask;
+ 		}
+@@ -1836,7 +1842,7 @@ static unsigned int v4l2_loopback_poll(struct file *file, struct poll_table_stru
+ 
+ 	switch (opener->type) {
+ 	case WRITER:
+-		ret_mask |= EPOLLOUT | EPOLLWRNORM;
++		ret_mask |= POLLOUT | POLLWRNORM;
+ 		break;
+ 	case READER:
+ 		if (!can_read(dev, opener)) {
+@@ -1845,9 +1851,9 @@ static unsigned int v4l2_loopback_poll(struct file *file, struct poll_table_stru
+ 			poll_wait(file, &dev->read_event, pts);
+ 		}
+ 		if (can_read(dev, opener))
+-			ret_mask |= EPOLLIN | EPOLLRDNORM;
++			ret_mask |= POLLIN | POLLRDNORM;
+ 		if (v4l2_event_pending(&opener->fh))
+-			ret_mask |= EPOLLPRI;
++			ret_mask |= POLLPRI;
+ 		break;
+ 	}
+ 

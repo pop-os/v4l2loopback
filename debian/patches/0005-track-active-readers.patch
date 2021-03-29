@@ -1,0 +1,95 @@
+From: You-Sheng Yang <vicamo.yang@canonical.com>
+Date: Mon, 19 Oct 2020 23:11:42 +0800
+Subject: UBUNTU: SAUCE: track active readers
+
+Signed-off-by: You-Sheng Yang <vicamo.yang@canonical.com>
+---
+ v4l2loopback.c | 36 ++++++++++++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 6 deletions(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 4bd1252..504fb61 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -363,6 +363,7 @@ struct v4l2_loopback_device {
+ 	int ready_for_output; /* set to true when no writer is currently attached
+ 			       * this differs slightly from !ready_for_capture,
+ 			       * e.g. when using fallback images */
++	int active_readers;   /* increase if any reader starts streaming */
+ 	int announce_all_caps;/* set to false, if device caps (OUTPUT/CAPTURE)
+ 			       * should only be announced if the resp. "ready"
+ 			       * flag is set; default=TRUE */
+@@ -1670,9 +1671,10 @@ static int vidioc_streamon(struct file *file, void *fh, enum v4l2_buf_type type)
+ 		}
+ 		return 0;
+ 	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
+-		opener->type = READER;
+ 		if (!dev->ready_for_capture)
+ 			return -EIO;
++		opener->type = READER;
++		dev->active_readers++;
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
+@@ -1686,8 +1688,27 @@ static int vidioc_streamon(struct file *file, void *fh, enum v4l2_buf_type type)
+ static int vidioc_streamoff(struct file *file, void *fh,
+ 			    enum v4l2_buf_type type)
+ {
++	struct v4l2_loopback_device *dev;
++	struct v4l2_loopback_opener *opener;
++
+ 	MARK();
+ 	dprintk("%d\n", type);
++
++	dev = v4l2loopback_getdevice(file);
++	opener = fh_to_opener(fh);
++	switch (type) {
++	case V4L2_BUF_TYPE_VIDEO_OUTPUT:
++		break;
++	case V4L2_BUF_TYPE_VIDEO_CAPTURE:
++		if (opener->type == READER) {
++			opener->type = 0;
++			dev->active_readers--;
++		}
++		break;
++	default:
++		return -EINVAL;
++	}
++
+ 	return 0;
+ }
+ 
+@@ -1904,15 +1925,17 @@ static int v4l2_loopback_close(struct file *file)
+ {
+ 	struct v4l2_loopback_opener *opener;
+ 	struct v4l2_loopback_device *dev;
+-	int iswriter=0;
++	int is_writer = 0, is_reader = 0;
+ 	MARK();
+ 
+ 
+ 	opener = fh_to_opener(file->private_data);
+ 	dev    = v4l2loopback_getdevice(file);
+ 
+-	if(WRITER == opener->type)
+-		iswriter = 1;
++	if (WRITER == opener->type)
++		is_writer = 1;
++	if (READER == opener->type)
++		is_reader = 1;
+ 
+ 	atomic_dec(&dev->open_count);
+ 	if (dev->open_count.counter == 0) {
+@@ -1925,9 +1948,10 @@ static int v4l2_loopback_close(struct file *file)
+ 	v4l2_fh_exit(&opener->fh);
+ 
+ 	kfree(opener);
+-	if(iswriter) {
++	if (is_writer)
+ 		dev->ready_for_output = 1;
+-	}
++	if (is_reader)
++		dev->active_readers--;
+ 	MARK();
+ 	return 0;
+ }

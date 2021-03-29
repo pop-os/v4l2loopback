@@ -1,0 +1,10 @@
+0001-dev-initialize-per-opener-v4l2_fh.patch
+0002-event-install-event-un-subscribe-hook.patch
+0003-event-support-polling-for-events.patch
+0004-event-fix-backward-compatibility-to-3.16.patch
+0005-track-active-readers.patch
+0006-UBUNTU-SAUCE-event-support-V4L2_EVENT_PRI_CLIENT_USA.patch
+0007-compliance-stop-declaring-V4L2_CAP_VIDEO_M2M-capabil.patch
+0008-compliance-fix-vidioc_enum_frameintervals-in-output-.patch
+0009-compliance-fix-enum-frame-sizes-intervals-errors.patch
+0010-compliance-fix-fmtdesc.type-was-modified-error.patch

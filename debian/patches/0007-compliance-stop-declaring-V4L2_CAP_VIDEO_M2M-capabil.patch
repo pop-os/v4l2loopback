@@ -1,0 +1,52 @@
+From: You-Sheng Yang <vicamo@gmail.com>
+Date: Thu, 11 Mar 2021 21:42:28 +0800
+Subject: compliance: stop declaring V4L2_CAP_VIDEO_M2M capability
+
+v4l2-compliance complains about "Video Capture cap set, but no Video
+Capture formats defined" because V4L2_CAP_VIDEO_M2M is set and yet
+vidioc_enum_fmt_cap implementation would simply return -EINVAL before
+being ready for capturing.
+
+V4L2 memory-to-memory operatons have never been actually supported. It
+was introduced in an attempt to fix umlaeute/v4l2loopback#67,
+VIDIOC_G/S_PRIORITY test failures reported by v4l2-compliance, but
+VIDIOC_G/S_PRIORITY is an exclusive feature when V4L2 file handle
+framework is used, and this was certainly not the case until
+umlaeute/v4l2loopback#345 that brought in v4l2_fh for V4L2 Event API
+support.
+
+This change removes all declarations of M2M support.
+
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+(backported from
+https://github.com/vicamo/v4l2loopback/commit/9a77eb691f1db37cce268ef58ad763f1e2f5a619)
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 3cea842..222e621 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -703,10 +703,6 @@ static int vidioc_querycap(struct file *file, void *priv, struct v4l2_capability
+ 	cap->version = V4L2LOOPBACK_VERSION_CODE;
+ #endif
+ 
+-#ifdef V4L2_CAP_VIDEO_M2M
+-	capabilities |= V4L2_CAP_VIDEO_M2M;
+-#endif /* V4L2_CAP_VIDEO_M2M */
+-
+ 	if (dev->announce_all_caps) {
+ 		capabilities |= V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_VIDEO_OUTPUT;
+ 	} else {
+@@ -2220,9 +2216,6 @@ static void init_vdev(struct video_device *vdev, int nr)
+ #if LINUX_VERSION_CODE >= KERNEL_VERSION(4, 7, 0)
+ 	vdev->device_caps  =
+ 		V4L2_CAP_DEVICE_CAPS |
+-#ifdef V4L2_CAP_VIDEO_M2M
+-		V4L2_CAP_VIDEO_M2M |
+-#endif
+                 V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_VIDEO_OUTPUT |
+                 V4L2_CAP_READWRITE | V4L2_CAP_STREAMING;
+ #endif

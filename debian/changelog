@@ -1,3 +1,19 @@
+v4l2loopback (0.12.5-1ubuntu1) hirsute; urgency=medium
+
+  * Support client usage notification via V4l2 Event API (LP: #1921474)
+    - dev: initialize per opener v4l2_fh
+    - event: install event (un)subscribe hook
+    - event: support polling for events
+    - event: fix backward compatibility to 3.16
+    - UBUNTU: SAUCE: track active readers
+    - UBUNTU: SAUCE: event: support V4L2_EVENT_PRI_CLIENT_USAGE
+    - compliance: stop declaring V4L2_CAP_VIDEO_M2M capability
+    - compliance: fix vidioc_enum_frameintervals in output side
+    - compliance: fix enum frame sizes/intervals errors
+    - compliance: fix "fmtdesc.type was modified" error
+
+ -- You-Sheng Yang <vicamo.yano@canonical.com>  Mon, 29 Mar 2021 17:02:42 +0800
+
 v4l2loopback (0.12.5-1) unstable; urgency=medium
 
   * New upstream version 0.12.5

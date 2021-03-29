@@ -1,0 +1,30 @@
+From: You-Sheng Yang <vicamo@gmail.com>
+Date: Sat, 13 Mar 2021 21:54:43 +0800
+Subject: compliance: fix "fmtdesc.type was modified" error
+
+Buffer type in vidioc_enum_fmt_out will always either be
+V4L2_BUF_TYPE_VIDEO_OUTPUT or V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE, and
+while MPLANE capaility is not declared, it cannot be
+V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE anyway. Besides, this field is an
+input field and should not be modified by kernel driver.
+
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+(cherry picked from
+https://github.com/vicamo/v4l2loopback/commit/a4b049bb0c9bf3a49418ff238ad7b74e0d024bd2)
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 11fa8a2..c9b1445 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -920,7 +920,6 @@ static int vidioc_enum_fmt_out(struct file *file, void *fh, struct v4l2_fmtdesc
+ 		if (NULL == fmt)
+ 			return -EINVAL;
+ 
+-		f->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
+ 		/* f->flags = ??; */
+ 		snprintf(f->description, sizeof(f->description), "%s", fmt->name);
+ 

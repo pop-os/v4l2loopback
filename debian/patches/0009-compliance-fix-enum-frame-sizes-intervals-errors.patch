@@ -1,0 +1,60 @@
+From: You-Sheng Yang <vicamo@gmail.com>
+Date: Thu, 11 Mar 2021 21:42:43 +0800
+Subject: compliance: fix enum frame sizes/intervals errors
+
+This change checks frame size/format from user input.
+
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+(cherry picked from
+https://github.com/vicamo/v4l2loopback/commit/80639c9fc1ca06ad5b7a1013ccd9ad12866fd807)
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index aa3ad44..11fa8a2 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -740,6 +740,9 @@ static int vidioc_enum_framesizes(struct file *file, void *fh, struct v4l2_frmsi
+ 		/* format has already been negotiated
+ 		 * cannot change during runtime
+ 		 */
++		if (argp->pixel_format != dev->pix_format.pixelformat)
++			return -EINVAL;
++
+ 		argp->type = V4L2_FRMSIZE_TYPE_DISCRETE;
+ 
+ 		argp->discrete.width = dev->pix_format.width;
+@@ -747,6 +750,9 @@ static int vidioc_enum_framesizes(struct file *file, void *fh, struct v4l2_frmsi
+ 	} else {
+ 		/* if the format has not been negotiated yet, we accept anything
+ 		 */
++		if (NULL == format_by_fourcc(argp->pixel_format))
++			return -EINVAL;
++
+ 		argp->type = V4L2_FRMSIZE_TYPE_CONTINUOUS;
+ 
+ 		argp->stepwise.min_width = V4L2LOOPBACK_SIZE_MIN_WIDTH;
+@@ -774,12 +780,20 @@ static int vidioc_enum_frameintervals(struct file *file, void *fh, struct v4l2_f
+ 
+ 	if (dev->ready_for_capture) {
+ 		if (argp->width != dev->pix_format.width ||
+-		    argp->height != dev->pix_format.height)
++		    argp->height != dev->pix_format.height ||
++		    argp->pixel_format != dev->pix_format.pixelformat)
+ 			return -EINVAL;
+ 
+ 		argp->type = V4L2_FRMIVAL_TYPE_DISCRETE;
+ 		argp->discrete = dev->capture_param.timeperframe;
+ 	} else {
++		if (argp->width < V4L2LOOPBACK_SIZE_MIN_WIDTH ||
++		    argp->width > max_width ||
++		    argp->height < V4L2LOOPBACK_SIZE_MIN_HEIGHT ||
++		    argp->height > max_height ||
++		    NULL == format_by_fourcc(argp->pixel_format))
++			return -EINVAL;
++
+ 		argp->type = V4L2_FRMIVAL_TYPE_CONTINUOUS;
+ 		argp->stepwise.min.numerator = 1;
+ 		argp->stepwise.min.denominator = V4L2LOOPBACK_FPS_MAX;
