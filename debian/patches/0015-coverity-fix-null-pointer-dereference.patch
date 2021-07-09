@@ -1,0 +1,54 @@
+From: You-Sheng Yang <vicamo@gmail.com>
+Date: Mon, 31 May 2021 17:14:21 +0800
+Subject: UBUNTU: SAUCE: coverity: fix null pointer dereference
+
+(backported from umlaeute/v4l2loopback/pull/438 commit
+8245707199d6651fa1bad91929a015a6ffeebc3e)
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index a1a2518..4f63aaf 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -515,6 +515,9 @@ static ssize_t attr_store_format(struct device *cd,
+ 	struct v4l2_loopback_device *dev = v4l2loopback_cd2dev(cd);
+ 	int fps_num = 0, fps_den = 1;
+ 
++	if (!dev)
++		return -ENODEV;
++
+ 	/* only fps changing is supported */
+ 	if (sscanf(buf, "@%d/%d", &fps_num, &fps_den) > 0) {
+ 		struct v4l2_fract f = {
+@@ -536,6 +539,9 @@ static ssize_t attr_show_buffers(struct device *cd,
+ {
+ 	struct v4l2_loopback_device *dev = v4l2loopback_cd2dev(cd);
+ 
++	if (!dev)
++		return -ENODEV;
++
+ 	return sprintf(buf, "%d\n", dev->used_buffers);
+ }
+ 
+@@ -546,6 +552,9 @@ static ssize_t attr_show_maxopeners(struct device *cd,
+ {
+ 	struct v4l2_loopback_device *dev = v4l2loopback_cd2dev(cd);
+ 
++	if (!dev)
++		return -ENODEV;
++
+ 	return sprintf(buf, "%d\n", dev->max_openers);
+ }
+ 
+@@ -559,6 +568,8 @@ static ssize_t attr_store_maxopeners(struct device *cd,
+ 		return -EINVAL;
+ 
+ 	dev = v4l2loopback_cd2dev(cd);
++	if (!dev)
++		return -ENODEV;
+ 
+ 	if (dev->max_openers == curr)
+ 		return len;

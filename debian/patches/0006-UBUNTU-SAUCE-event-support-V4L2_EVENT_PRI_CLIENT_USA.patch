@@ -1,7 +1,6 @@
 From: You-Sheng Yang <vicamo.yang@canonical.com>
 Date: Thu, 13 Aug 2020 23:21:05 +0800
-Subject: UBUNTU: SAUCE: event: support
- V4L2_EVENT_PRI_CLIENT_USAGE
+Subject: UBUNTU: SAUCE: event: support V4L2_EVENT_PRI_CLIENT_USAGE
 
 Signed-off-by: You-Sheng Yang <vicamo.yang@canonical.com>
 ---

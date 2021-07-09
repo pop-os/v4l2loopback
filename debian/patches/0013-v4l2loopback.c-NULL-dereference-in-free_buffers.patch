@@ -1,0 +1,29 @@
+From: Tim Gardner <tim.gardner@canonical.com>
+Date: Thu, 27 May 2021 12:03:57 -0600
+Subject: v4l2loopback.c: NULL dereference in free_buffers()
+
+Coverity found a possible NULL dereference after NULL check.
+
+CID 114122 (#1 of 1): Dereference after null check (FORWARD_NULL)
+5. var_deref_op: Dereferencing null pointer dev.
+
+Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
+(cherry picked from commit fc85f86bf74299c6238691fdafd5bae06c6e8c93)
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 245ea92..957eba3 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -2106,6 +2106,8 @@ static int free_buffers(struct v4l2_loopback_device *dev)
+ {
+ 	MARK();
+ 	dprintk("freeing image@%p for dev:%p\n", dev ? dev->image : NULL, dev);
++	if (!dev)
++		return 0;
+ 	if (dev->image) {
+ 		vfree(dev->image);
+ 		dev->image = NULL;

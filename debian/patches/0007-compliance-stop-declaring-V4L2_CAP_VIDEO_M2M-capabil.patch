@@ -18,8 +18,7 @@ support.
 This change removes all declarations of M2M support.
 
 Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
-(backported from
-https://github.com/vicamo/v4l2loopback/commit/9a77eb691f1db37cce268ef58ad763f1e2f5a619)
+(backported from commit 9a77eb691f1db37cce268ef58ad763f1e2f5a619)
 Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
 ---
  v4l2loopback.c | 7 -------

@@ -6,8 +6,7 @@ Frame intervals is also critical for the output side. Report some
 reasonable value here. 1000 fps should be enough for everybody.
 
 Signed-off-by: You-Sheng Yang <vicamo.yang@canonical.com>
-(backported from
-https://github.com/vicamo/v4l2loopback/commit/b5272ea59663f35d009a623a2ce4d2137ffcff06)
+(backported from commit b5272ea59663f35d009a623a2ce4d2137ffcff06)
 Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
 ---
  v4l2loopback.c | 37 +++++++++++++++++++++----------------

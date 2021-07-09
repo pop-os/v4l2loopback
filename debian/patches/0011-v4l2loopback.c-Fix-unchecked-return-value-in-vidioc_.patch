@@ -1,0 +1,60 @@
+From: Tim Gardner <tim.gardner@canonical.com>
+Date: Thu, 27 May 2021 11:25:41 -0600
+Subject: v4l2loopback.c: Fix unchecked return value in vidioc_s_fmt_out()
+
+Coverity detected an unchecked return code:
+
+1025static int vidioc_s_fmt_out(struct file *file, void *priv, struct v4l2_format *fmt)
+1026{
+1027        struct v4l2_loopback_device *dev;
+1028        char buf[5];
+1029        int ret;
+    	1. Condition debug > 1, taking true branch.
+1030        MARK();
+1031
+1032        dev = v4l2loopback_getdevice(file);
+1033        ret = vidioc_try_fmt_out(file, priv, fmt);
+1034
+    	2. Condition debug > 0, taking true branch.
+1035        dprintk("s_fmt_out(%d) %d...%d\n", ret, dev->ready_for_capture, dev->pix_format.sizeimage);
+1036
+1037        buf[4] = 0;
+    	3. Condition debug > 0, taking true branch.
+1038        dprintk("outFOURCC=%s\n", fourcc2str(dev->pix_format.pixelformat, buf));
+1039
+    	4. Condition ret < 0, taking false branch.
+1040        if (ret < 0)
+1041                return ret;
+1042
+    	5. Condition !dev->ready_for_capture, taking true branch.
+1043        if (!dev->ready_for_capture) {
+1044                dev->buffer_size = PAGE_ALIGN(dev->pix_format.sizeimage);
+1045                fmt->fmt.pix.sizeimage = dev->buffer_size;
+
+CID 114125 (#1 of 1): Unchecked return value (CHECKED_RETURN)
+6. check_return: Calling allocate_buffers without checking return value (as is done elsewhere 3 out of 5 times).
+1046                allocate_buffers(dev);
+1047        }
+1048        return ret;
+1049}
+
+Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
+(cherry picked from commit b3f1f668493e2c24d1aba9bb4e9ea8626895d718)
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index c9b1445..18bca75 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -1043,7 +1043,7 @@ static int vidioc_s_fmt_out(struct file *file, void *priv, struct v4l2_format *f
+ 	if (!dev->ready_for_capture) {
+ 		dev->buffer_size = PAGE_ALIGN(dev->pix_format.sizeimage);
+ 		fmt->fmt.pix.sizeimage = dev->buffer_size;
+-		allocate_buffers(dev);
++		ret = allocate_buffers(dev);
+ 	}
+ 	return ret;
+ }

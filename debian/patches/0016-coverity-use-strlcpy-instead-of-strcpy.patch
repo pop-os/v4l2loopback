@@ -1,0 +1,26 @@
+From: You-Sheng Yang <vicamo@gmail.com>
+Date: Fri, 9 Jul 2021 17:21:20 +0800
+Subject: UBUNTU: SAUCE: coverity: use strlcpy instead of strcpy
+
+CID 81706 (#1 of 1): Copy into fixed size buffer (STRING_OVERFLOW)
+4. fixed_size_dest: You might overrun the 32-character fixed-size string
+   q->name by copying cnf->name without checking the length.
+
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 4f63aaf..c1ccd10 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -1199,7 +1199,7 @@ static int vidioc_queryctrl(struct file *file, void *fh, struct v4l2_queryctrl *
+ 	if (!cnf)
+ 		BUG();
+ 
+-	strcpy(q->name, cnf->name);
++	strlcpy(q->name, cnf->name, sizeof(q->name));
+ 	q->default_value=cnf->def;
+ 	q->type = cnf->type;
+ 	q->minimum = cnf->min;

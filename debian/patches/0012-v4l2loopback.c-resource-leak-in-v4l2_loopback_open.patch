@@ -1,0 +1,28 @@
+From: Tim Gardner <tim.gardner@canonical.com>
+Date: Thu, 27 May 2021 11:37:33 -0600
+Subject: v4l2loopback.c: resource leak in v4l2_loopback_open()
+
+Coverity discovered a resource leak in an error path.
+
+CID 114123 (#2 of 2): Resource leak (RESOURCE_LEAK)
+9. leaked_storage: Variable opener going out of scope leaks the storage it points to.
+
+Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
+(cherry picked from commit afd718e905cde1a62f399462bb27dde2b95d48fd)
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 18bca75..245ea92 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -1984,6 +1984,7 @@ static int v4l2_loopback_open(struct file *file)
+ 
+ 		if (r < 0) {
+ 			dprintk("timeout image allocation failed\n");
++			kfree(opener);
+ 			return r;
+ 		}
+ 	}

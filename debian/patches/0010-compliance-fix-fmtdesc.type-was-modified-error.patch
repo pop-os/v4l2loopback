@@ -9,8 +9,7 @@ V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE anyway. Besides, this field is an
 input field and should not be modified by kernel driver.
 
 Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
-(cherry picked from
-https://github.com/vicamo/v4l2loopback/commit/a4b049bb0c9bf3a49418ff238ad7b74e0d024bd2)
+(cherry picked from commit a4b049bb0c9bf3a49418ff238ad7b74e0d024bd2)
 Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
 ---
  v4l2loopback.c | 1 -

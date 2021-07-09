@@ -8,3 +8,9 @@
 0008-compliance-fix-vidioc_enum_frameintervals-in-output-.patch
 0009-compliance-fix-enum-frame-sizes-intervals-errors.patch
 0010-compliance-fix-fmtdesc.type-was-modified-error.patch
+0011-v4l2loopback.c-Fix-unchecked-return-value-in-vidioc_.patch
+0012-v4l2loopback.c-resource-leak-in-v4l2_loopback_open.patch
+0013-v4l2loopback.c-NULL-dereference-in-free_buffers.patch
+0014-coverity-fix-unchecked-return-value.patch
+0015-coverity-fix-null-pointer-dereference.patch
+0016-coverity-use-strlcpy-instead-of-strcpy.patch

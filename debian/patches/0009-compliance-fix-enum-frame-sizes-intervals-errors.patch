@@ -5,8 +5,7 @@ Subject: compliance: fix enum frame sizes/intervals errors
 This change checks frame size/format from user input.
 
 Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
-(cherry picked from
-https://github.com/vicamo/v4l2loopback/commit/80639c9fc1ca06ad5b7a1013ccd9ad12866fd807)
+(cherry picked from commit 80639c9fc1ca06ad5b7a1013ccd9ad12866fd807)
 Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
 ---
  v4l2loopback.c | 16 +++++++++++++++-
