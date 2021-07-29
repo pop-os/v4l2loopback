@@ -14,3 +14,4 @@
 0014-coverity-fix-unchecked-return-value.patch
 0015-coverity-fix-null-pointer-dereference.patch
 0016-coverity-use-strlcpy-instead-of-strcpy.patch
+0017-dont-fail-if-allocating-0-sized-buffers.patch

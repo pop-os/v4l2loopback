@@ -1,0 +1,24 @@
+From: Erich Eickmeyer <eeickmeyer@ubuntu.com>
+Date: Thu, 29 Jul 2021 10:51:39 -0700
+Subject: Don't fail if allocating 0-sized buffers
+
+backported from commit baf9de279afc7a7c7513e9c40a0c9ff88f456af4
+https://github.com/umlaeute/v4l2loopback/issues/439
+
+Signed-off-by: Erich Eickmeyer <eeickmeyer@ubuntu.com>
+---
+ v4l2loopback.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/v4l2loopback.c b/v4l2loopback.c
+index 2cc0bf3..73defda 100644
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -2420,6 +2420,6 @@ static int v4l2_loopback_add(struct v4l2_loopback_config *conf, int *ret_nr)
+ 	dprintk("buffer_size = %ld (=%d)\n", dev->buffer_size, dev->pix_format.sizeimage);
+ 	ret = allocate_buffers(dev);
+-	if (ret)
++	if (ret && dev->buffer_size)
+ 		goto error;
+ 
+ 	init_waitqueue_head(&dev->read_event);
