@@ -1,0 +1,16 @@
+Description: Only attempt building module for kernels that have CONFIG_VIDEO_V4L2 turned on.
+Author: Dimitri John Ledkov <dimitri.ledkov@canonical.com>
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1968191
+
+Index: v4l2loopback-0.12.5/dkms.conf
+===================================================================
+--- v4l2loopback-0.12.5.orig/dkms.conf
++++ v4l2loopback-0.12.5/dkms.conf
+@@ -10,3 +10,7 @@ DEST_MODULE_LOCATION[0]="/extra"
+ 
+ REMAKE_INITRD="no"
+ AUTOINSTALL="yes"
++
++if ! grep -q '^CONFIG_VIDEO_V4L2=[ym]$' $kernel_source_dir/.config; then
++BUILD_EXCLUSIVE_KERNEL="^$"
++fi

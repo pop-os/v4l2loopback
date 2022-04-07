@@ -1,3 +1,10 @@
+v4l2loopback (0.12.5-1ubuntu4) jammy; urgency=medium
+
+  * Only attempt building module for kernels that have CONFIG_VIDEO_V4L2
+    turned on. LP: #1968191
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Thu, 07 Apr 2022 16:37:40 +0100
+
 v4l2loopback (0.12.5-1ubuntu3) impish; urgency=medium
 
   * Don't fail if allocating 0-sized buffers (LP: #1936250)
