@@ -1,7 +1,0 @@
-#!/bin/sh
-# Common autopkgtest script for testing a kernel module source package with
-#   module-assistant
-# Copyright: (C) 2019 IOhannes m zmölnig <umlaeute@debian.org>
-
-module-assistant --text-mode --verbose prepare
-module-assistant --text-mode --verbose build v4l2loopback

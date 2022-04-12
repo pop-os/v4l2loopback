@@ -1,3 +1,11 @@
+v4l2loopback (0.12.5-1ubuntu5) jammy; urgency=medium
+
+  * Drop manual and out of date dkms autopkgtests in favour of
+    automatically generated ones with autodep8. Unblocks migration of
+    linux-kvm kernel.
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Tue, 12 Apr 2022 09:30:03 +0100
+
 v4l2loopback (0.12.5-1ubuntu4) jammy; urgency=medium
 
   * Only attempt building module for kernels that have CONFIG_VIDEO_V4L2
