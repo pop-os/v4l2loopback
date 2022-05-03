@@ -1,3 +1,9 @@
+v4l2loopback (0.12.5-1ubuntu6) kinetic; urgency=low
+
+  * Check CONFIG_VIDEO_DEV against kernel version >= 5.18. (LP: #1970983)
+
+ -- You-Sheng Yang <vicamo.yano@canonical.com>  Tue, 03 May 2022 03:55:33 +0000
+
 v4l2loopback (0.12.5-1ubuntu5) jammy; urgency=medium
 
   * Drop manual and out of date dkms autopkgtests in favour of

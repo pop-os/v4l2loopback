@@ -1,16 +1,26 @@
-Description: Only attempt building module for kernels that have CONFIG_VIDEO_V4L2 turned on.
-Author: Dimitri John Ledkov <dimitri.ledkov@canonical.com>
-Bug-Ubuntu: https://bugs.launchpad.net/bugs/1968191
+From: Dimitri John Ledkov <dimitri.ledkov@canonical.com>
+Date: Tue, 3 May 2022 03:43:42 +0000
+Subject: Only attempt building module for kernels that have CONFIG_VIDEO_V4L2
+ turned on.
 
-Index: v4l2loopback-0.12.5/dkms.conf
-===================================================================
---- v4l2loopback-0.12.5.orig/dkms.conf
-+++ v4l2loopback-0.12.5/dkms.conf
-@@ -10,3 +10,7 @@ DEST_MODULE_LOCATION[0]="/extra"
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/1968191
+---
+ dkms.conf | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/dkms.conf b/dkms.conf
+index 4e916fc..1d7e2ec 100644
+--- a/dkms.conf
++++ b/dkms.conf
+@@ -10,3 +10,11 @@ DEST_MODULE_LOCATION[0]="/extra"
  
  REMAKE_INITRD="no"
  AUTOINSTALL="yes"
 +
-+if ! grep -q '^CONFIG_VIDEO_V4L2=[ym]$' $kernel_source_dir/.config; then
-+BUILD_EXCLUSIVE_KERNEL="^$"
++if ! { echo "$kernelver"; echo 5.18; } | sort -V -C; then
++  if ! grep -q '^CONFIG_VIDEO_DEV=[ym]$' $kernel_source_dir/.config; then
++    BUILD_EXCLUSIVE_KERNEL="^$"
++  fi
++elif ! grep -q '^CONFIG_VIDEO_V4L2=[ym]$' $kernel_source_dir/.config; then
++  BUILD_EXCLUSIVE_KERNEL="^$"
 +fi
