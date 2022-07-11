@@ -16,3 +16,4 @@
 0016-coverity-use-strlcpy-instead-of-strcpy.patch
 0017-dont-fail-if-allocating-0-sized-buffers.patch
 skip-kernels-without-video.patch
+cfi-fixup.patch

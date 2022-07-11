@@ -1,0 +1,40 @@
+Description: fixup obsolete dkms.conf and module init/exit
+  Drop obsolte REMAKE_INITRD option from dkms.conf.
+  Update module init & exit calls to use kernel provided macros, such
+  that they gain correct IBT attributes.
+Author: Dimitri John Ledkov <dimitri.ledkov@canonical.com>
+
+
+--- v4l2loopback-0.12.5.orig/dkms.conf
++++ v4l2loopback-0.12.5/dkms.conf
+@@ -8,7 +8,6 @@ CLEAN="make clean"
+ BUILT_MODULE_NAME[0]="$PACKAGE_NAME"
+ DEST_MODULE_LOCATION[0]="/extra"
+ 
+-REMAKE_INITRD="no"
+ AUTOINSTALL="yes"
+ 
+ if ! { echo "$kernelver"; echo 5.18; } | sort -V -C; then
+--- v4l2loopback-0.12.5.orig/v4l2loopback.c
++++ v4l2loopback-0.12.5/v4l2loopback.c
+@@ -2621,19 +2621,8 @@ static void v4l2loopback_cleanup_module(
+ 	dprintk("module removed\n");
+ }
+ 
+-#ifdef MODULE
+-int __init init_module(void)
+-{
+-        return v4l2loopback_init_module();
+-}
+-void __exit cleanup_module(void) {
+-        return v4l2loopback_cleanup_module();
+-}
+-#else
+ late_initcall(v4l2loopback_init_module);
+-#endif
+-
+-
++module_exit(v4l2loopback_cleanup_module);
+ 
+ /*
+  * fake usage of unused functions

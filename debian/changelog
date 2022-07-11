@@ -1,3 +1,11 @@
+v4l2loopback (0.12.5-1ubuntu7) kinetic; urgency=medium
+
+  * Drop obsolte REMAKE_INITRD option from dkms.conf.
+  * Update module init & exit calls to use kernel provided macros, such
+    that they gain correct IBT attributes. LP: #1980484
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Mon, 11 Jul 2022 16:14:38 +0100
+
 v4l2loopback (0.12.5-1ubuntu6) kinetic; urgency=low
 
   * Check CONFIG_VIDEO_DEV against kernel version >= 5.18. (LP: #1970983)
