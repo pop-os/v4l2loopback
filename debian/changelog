@@ -1,3 +1,9 @@
+v4l2loopback (0.12.5-1ubuntu7pop1) jammy; urgency=medium
+
+  * Backport to Pop 22.04 to support Linux 5.18
+
+ -- Michael Aaron Murphy <mmstick@pm.me>  Thu, 28 Jul 2022 15:30:34 +0200
+
 v4l2loopback (0.12.5-1ubuntu7) kinetic; urgency=medium
 
   * Drop obsolte REMAKE_INITRD option from dkms.conf.
