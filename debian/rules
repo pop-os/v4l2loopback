@@ -9,7 +9,7 @@ name = $(DEB_SOURCE)
 version	 = $(DEB_VERSION_UPSTREAM)
 
 %:
-	dh $@ --with dkms
+	dh $@
 
 build:
 	@echo "=============== BUILD =============="

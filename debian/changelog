@@ -1,3 +1,24 @@
+v4l2loopback (0.12.7-1) unstable; urgency=medium
+
+  * New upstream version 0.12.7
+
+  [ Andreas Beckmann ]
+  * Switch to dh-sequence-dkms.
+  * Switch to Testsuite: autopkgtest-pkg-dkms.
+
+  [ Debian Janitor ]
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository,
+    Repository-Browse.
+  * Remove constraints unnecessary since buster
+
+  [ IOhannes m zmölnig ]
+  * Drop patches applied upstream
+  * Drop unnecessary B-Ds
+  * Bump dh-compat to 13
+  * Bump standards version to 4.6.1
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Fri, 05 Aug 2022 00:47:27 +0200
+
 v4l2loopback (0.12.5-1) unstable; urgency=medium
 
   * New upstream version 0.12.5

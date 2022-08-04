@@ -1,7 +1,3 @@
-Tests: dkms-autopkgtest
-Restrictions: isolation-machine, needs-root, allow-stderr
-Depends: v4l2loopback-dkms, dkms, build-essential, linux-headers-686-pae | linux-headers-amd64 | linux-headers-generic | linux-headers
-
 Tests: ma-autopkgtest
-Restrictions: isolation-machine, needs-root, allow-stderr
+Restrictions: isolation-machine, needs-root, allow-stderr, superficial
 Depends: v4l2loopback-source, module-assistant
