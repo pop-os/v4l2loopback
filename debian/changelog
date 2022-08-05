@@ -1,3 +1,9 @@
+v4l2loopback (0.12.7-2) unstable; urgency=medium
+
+  * Fix DKMS build on linux>=5.18
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Fri, 05 Aug 2022 18:22:57 +0200
+
 v4l2loopback (0.12.7-1) unstable; urgency=medium
 
   * New upstream version 0.12.7
