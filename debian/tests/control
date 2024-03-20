@@ -1,3 +1,12 @@
-Tests: ma-autopkgtest
-Restrictions: isolation-machine, needs-root, allow-stderr, superficial
-Depends: v4l2loopback-source, module-assistant
+Test-Command: env BUILD_EXCLUSIVE_CONFIG="CONFIG_VIDEO_DEV" /usr/share/modass/module-assistant-autopkgtest v4l2loopback
+Features: test-name=m-a-autopkgtest
+Architecture: amd64 arm64
+Depends:
+ linux-doc,
+ module-assistant-autopkgtest,
+ v4l2loopback-source,
+Restrictions:
+ allow-stderr,
+ breaks-testbed,
+ needs-root,
+ superficial,

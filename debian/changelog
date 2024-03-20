@@ -1,3 +1,23 @@
+v4l2loopback (0.13.1-1) unstable; urgency=medium
+
+  * New upstream version 0.13.1
+    + Drop patches applied upstream
+  * v4l2loopback-utils is now arch:any
+  * Add fallback manpage (if help2man cannot be executed while cross-building)
+  * Add patch to fix 'clean' target
+  * Build tarball for v4l2loopback-source in 'build' target
+  * Modernize autopkgtests
+  * Update copyright information
+    + Bump copyright dates
+    + Add 'licensecheck' target
+    + Re-generate d/copyright_hints
+  * Apply 'wrap-and-sort -ast'
+  * Bump debhelper-version to 13 for control-modules
+  * Bump standards version to 4.6.2
+    + Also for control.modules
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Wed, 20 Mar 2024 10:08:55 +0100
+
 v4l2loopback (0.12.7-2) unstable; urgency=medium
 
   * Fix DKMS build on linux>=5.18

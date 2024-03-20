@@ -3,14 +3,17 @@ Section: graphics
 Priority: optional
 Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
 Homepage: https://github.com/umlaeute/v4l2loopback
-Build-Depends: debhelper-compat (= 12),
-Standards-Version: 4.4.1
+Build-Depends:
+ debhelper-compat (= 13),
+Standards-Version: 4.6.2
 
 Package: v4l2loopback-modules-_KVERS_
 Architecture: any
 Section: kernel
-Provides: v4l2loopback-modules
-Suggests: v4l2loopback-utils
+Provides:
+ v4l2loopback-modules,
+Suggests:
+ v4l2loopback-utils,
 Description: v4l2loopback modules for Linux (kernel _KVERS_)
  This package contains a loadable kernel modules that allows you to create
  "virtual video devices".

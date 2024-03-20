@@ -2,11 +2,13 @@ Source: v4l2loopback
 Section: kernel
 Priority: optional
 Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
-Build-Depends: debhelper-compat (= 13),
- dh-sequence-dkms,
- help2man,
+Build-Depends:
+ debhelper-compat (= 13),
+ help2man <!cross>,
+Build-Depends-Indep:
  bzip2,
-Standards-Version: 4.6.0
+ dh-sequence-dkms,
+Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://github.com/umlaeute/v4l2loopback
 Vcs-Git: https://salsa.debian.org/debian/v4l2loopback.git
@@ -16,10 +18,10 @@ Testsuite: autopkgtest-pkg-dkms
 Package: v4l2loopback-source
 Architecture: all
 Depends:
- ${misc:Depends},
+ bzip2,
  debhelper,
  make,
- bzip2,
+ ${misc:Depends},
 Recommends:
  module-assistant,
 Description: Source for the v4l2loopback driver
@@ -47,14 +49,15 @@ Description: Source for the v4l2loopback driver (DKMS)
 
 Package: v4l2loopback-utils
 Section: graphics
-Architecture: all
+Architecture: any
 Depends:
  ${misc:Depends},
- sudo,
- gstreamer1.0-tools,
- v4l-utils,
+ ${shlibs:Depends},
 Recommends:
- v4l2loopback-dkms |  v4l2loopback-modules,
+ gstreamer1.0-tools,
+ sudo,
+ v4l-utils,
+ v4l2loopback-dkms | v4l2loopback-modules,
 Description: Commandline utilities for the for the v4l2-loopback module
  This package contains applications to interact with v4l2-loopback devices
  ("virtual video devices").

@@ -1,0 +1,1 @@
+_build/${env:DEB_SOURCE}.tar.bz2	/usr/src/

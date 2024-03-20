@@ -1,0 +1,3 @@
+*.[chS]  usr/src/${env:DEB_SOURCE}-${env:DEB_VERSION_UPSTREAM}
+Kbuild   usr/src/${env:DEB_SOURCE}-${env:DEB_VERSION_UPSTREAM}
+Makefile usr/src/${env:DEB_SOURCE}-${env:DEB_VERSION_UPSTREAM}

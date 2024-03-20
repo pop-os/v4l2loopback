@@ -5,7 +5,7 @@ Source: https://github.com/umlaeute/v4l2loopback/
 License: GPL-2+
 
 Files: *
-Copyright: 2010-2019, IOhannes m zmölnig <zmoelnig@iem.at>
+Copyright: 2010-2024, IOhannes m zmölnig <zmoelnig@iem.at>
  2005-2009, Vasily Levin
  2009, Gorinich Zmey
  2010, Scott Maines <smaines@alaya.com>
@@ -41,7 +41,7 @@ License: GPL-2+
 
 Files: debian/*
 Copyright: 2008, Nobuhiro Iwamatsu <iwamatsu@nigauri.org>
- 2010-2018, IOhannes m zmölnig <umlaeute@debian.org>
+ 2010-2024, IOhannes m zmölnig <umlaeute@debian.org>
 License: GPL-2+
 
 License: GPL-2+

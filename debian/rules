@@ -5,44 +5,51 @@
 
 include /usr/share/dpkg/pkg-info.mk
 
-name = $(DEB_SOURCE)
-version	 = $(DEB_VERSION_UPSTREAM)
+export DEB_SOURCE
+export DEB_VERSION_UPSTREAM
+
+moddir=_build/modules/$(DEB_SOURCE)
 
 %:
 	dh $@
 
-build:
-	@echo "=============== BUILD =============="
-
-override_dh_auto_build:
-
-override_dh_auto_clean:
-	rm -f man/v4l2loopback-ctl.1
-
 override_dh_installman:
-	help2man -N --name "control v4l2 loopback devices" utils/v4l2loopback-ctl > man/v4l2loopback-ctl.1
+	mkdir -p man
+	cp debian/v4l2loopback-ctl.1 man
+	-help2man -N --name "control v4l2 loopback devices" -o man/v4l2loopback-ctl.1 --no-discard-stderr utils/v4l2loopback-ctl
 	dh_installman
 
-override_dh_dkms:
-	dh_dkms -p$(name)-dkms -V $(version)
-
-override_dh_auto_install:
-	# v4l2loopback-dkms
-	dh_installdirs -p$(name)-dkms usr/src/$(name)-$(version)
-	dh_install -p$(name)-dkms Makefile usr/src/$(name)-$(version)
-	dh_install -p$(name)-dkms *.[chS]  usr/src/$(name)-$(version)
-	# bbswitch-source (for use with module-assistant)
-	dh_installdirs -p$(name)-source usr/src/modules/$(name)/debian
-	dh_install -p$(name)-source Makefile usr/src/modules/$(name)
-	dh_install -p$(name)-source *.[chS] usr/src/modules/$(name)
-	dh_install -p$(name)-source README.md NEWS AUTHORS ChangeLog TODO usr/src/modules/$(name)
-	install -D -m 0755 debian/rules.modules debian/$(name)-source/usr/src/modules/$(name)/debian/rules
+override_dh_auto_build-arch:
+	dh_auto_build --arch -- \
+		-C utils
+override_dh_auto_build-indep:
+	mkdir -p $(moddir)/debian
+	cp Makefile Kbuild *.[chS] $(moddir)
+	cp README.md NEWS AUTHORS ChangeLog TODO $(moddir)
+	cp debian/rules.modules $(moddir)/debian/rules
 	for file in control.modules.in control copyright changelog docs; do \
-		install -m 644 debian/$$file debian/$(name)-source/usr/src/modules/$(name)/debian/; \
+		cp debian/$$file $(moddir)/debian/; \
 	done
-	tar cfj debian/$(name)-source/usr/src/$(name).tar.bz2 \
+	tar cjf _build/$(DEB_SOURCE).tar.bz2 \
 		--owner=root --group=src --mode=go=rX,u+rw,a-s --numeric-owner \
 		--sort=name  --mtime="@$(SOURCE_DATE_EPOCH)" \
-		-C debian/$(name)-source/usr/src \
+		-C _build \
 		modules
-	rm -rf debian/$(name)-source/usr/src/modules
+
+override_dh_auto_install override_dh_auto_clean:
+
+override_dh_dkms:
+	dh_dkms -p$(DEB_SOURCE)-dkms -V $(DEB_VERSION_UPSTREAM)
+
+
+DEB_COPYRIGHT_CHECK_IGNORE_REGEX = \
+        debian/.*
+# licensecheck v1
+.PHONY: licensecheck
+licensecheck:
+	LANG=C.UTF-8 licensecheck \
+		-i "^($(DEB_COPYRIGHT_CHECK_IGNORE_REGEX))$$" \
+		--check '.*' --recursive --deb-machine --lines 0 * \
+		> debian/copyright_newhints
+	cmp debian/copyright_hints debian/copyright_newhints \
+		&& rm debian/copyright_newhints
