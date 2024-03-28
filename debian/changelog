@@ -1,3 +1,9 @@
+v4l2loopback (0.13.1-1pop1) jammy; urgency=medium
+
+  * Backport for Linux 6.8 support
+
+ -- Michael Aaron Murphy <michael@mmurphy.dev>  Thu, 28 Mar 2024 14:12:00 +0100
+
 v4l2loopback (0.13.1-1) unstable; urgency=medium
 
   * New upstream version 0.13.1
