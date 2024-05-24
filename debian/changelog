@@ -1,3 +1,13 @@
+v4l2loopback (0.13.2-1) unstable; urgency=medium
+
+  * New upstream version 0.13.2 (Closes: #1071037)
+    + Drop patches applied ustream
+  * Update copyright information
+    + Re-generate d/copyright_hints
+  * Bump standards version to 4.7.0
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Fri, 24 May 2024 12:58:14 +0200
+
 v4l2loopback (0.13.1-1) unstable; urgency=medium
 
   * New upstream version 0.13.1
