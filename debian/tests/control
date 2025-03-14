@@ -1,5 +1,6 @@
 Test-Command: env BUILD_EXCLUSIVE_CONFIG="CONFIG_VIDEO_DEV" /usr/share/modass/module-assistant-autopkgtest v4l2loopback
-Features: test-name=m-a-autopkgtest
+Features:
+ test-name=m-a-autopkgtest,
 Architecture: amd64 arm64
 Depends:
  linux-doc,

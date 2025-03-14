@@ -6,9 +6,9 @@ Build-Depends:
  debhelper-compat (= 13),
  help2man <!cross>,
 Build-Depends-Indep:
- bzip2,
  dh-sequence-dkms,
-Standards-Version: 4.7.0
+ bzip2,
+Standards-Version: 4.7.2
 Rules-Requires-Root: no
 Homepage: https://github.com/umlaeute/v4l2loopback
 Vcs-Git: https://salsa.debian.org/debian/v4l2loopback.git
@@ -18,12 +18,11 @@ Testsuite: autopkgtest-pkg-dkms
 Package: v4l2loopback-source
 Architecture: all
 Depends:
- bzip2,
  debhelper,
+ bzip2,
  make,
- ${misc:Depends},
-Recommends:
  module-assistant,
+ ${misc:Depends},
 Description: Source for the v4l2loopback driver
  This module allows you to create "virtual video devices".
  Normal (v4l2) applications will read these devices as if they were ordinary

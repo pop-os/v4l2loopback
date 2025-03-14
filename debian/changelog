@@ -1,3 +1,27 @@
+v4l2loopback (0.14.0-1) unstable; urgency=medium
+
+  * New upstream version 0.14.0
+    + Refresh patches
+
+  [ Andreas Beckmann ]
+  * dkms.conf: Fix CLEAN command.
+  * dkms.conf: Declare BUILD_EXCLUSIVE_KERNEL_MIN="4.4" for availability of
+    V4L2_COLORSPACE_DCI_P3.
+  * v4l2loopback-source: Promote module-assistant to Depends.
+
+  [ IOhannes m zmölnig (Debian/GNU) ]
+  * Install udev-rules
+  * Forward dkms.conf patch to upstream
+  * Update copyright information
+    + Bump copyright dates
+    + Add 'licensecheck' target
+    + Re-generate d/copyright_hints
+  * Apply 'wrap-and-sort -ast'
+  * Bump d/watch version to 4
+  * Bump standards version to 4.7.2
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Fri, 14 Mar 2025 20:54:00 +0100
+
 v4l2loopback (0.13.2-1) unstable; urgency=medium
 
   * New upstream version 0.13.2 (Closes: #1071037)

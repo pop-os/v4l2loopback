@@ -1,1 +1,2 @@
 utils/v4l2loopback-ctl usr/bin/
+udev/*.rules	/usr/lib/udev/rules.d/
