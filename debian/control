@@ -37,6 +37,8 @@ Depends:
  ${misc:Depends},
 Suggests:
  v4l2loopback-utils,
+Breaks:
+ v4l2loopback-utils (<< 0.15~),
 Description: Source for the v4l2loopback driver (DKMS)
  This module allows you to create "virtual video devices".
  Normal (v4l2) applications will read these devices as if they were ordinary

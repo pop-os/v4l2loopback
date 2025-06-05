@@ -1,3 +1,11 @@
+v4l2loopback (0.15.0-1) unstable; urgency=medium
+
+  * New upstream version 0.15.0 (Closes: #1106246, #1100860)
+    * Drop patches applied upstream
+  * dkms: Ensure a recent enough version of v4l2loopback-utils
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 05 Jun 2025 09:55:40 +0200
+
 v4l2loopback (0.14.0-1) unstable; urgency=medium
 
   * New upstream version 0.14.0
