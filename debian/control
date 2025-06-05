@@ -37,8 +37,6 @@ Depends:
  ${misc:Depends},
 Suggests:
  v4l2loopback-utils,
-Breaks:
- v4l2loopback-utils (<< 0.15~),
 Description: Source for the v4l2loopback driver (DKMS)
  This module allows you to create "virtual video devices".
  Normal (v4l2) applications will read these devices as if they were ordinary
@@ -59,6 +57,8 @@ Recommends:
  sudo,
  v4l-utils,
  v4l2loopback-dkms | v4l2loopback-modules,
+Breaks:
+ v4l2loopback-dkms (<< 0.15~),
 Description: Commandline utilities for the for the v4l2-loopback module
  This package contains applications to interact with v4l2-loopback devices
  ("virtual video devices").

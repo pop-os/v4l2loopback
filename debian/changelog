@@ -1,3 +1,10 @@
+v4l2loopback (0.15.0-2) unstable; urgency=medium
+
+  * v4l2loopback-utils requires a newer version of v4l2loopback-dkms
+    (not the other way round)
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 05 Jun 2025 10:06:46 +0200
+
 v4l2loopback (0.15.0-1) unstable; urgency=medium
 
   * New upstream version 0.15.0 (Closes: #1106246, #1100860)
