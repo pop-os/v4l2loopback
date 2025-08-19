@@ -1,3 +1,13 @@
+v4l2loopback (0.15.1-1) unstable; urgency=medium
+
+  * New upstream version 0.15.1
+    (Closes: #1108287)
+  * Include <linux/timer.h> for the "timer_setup" macro.
+    Thanks to Simon Richter <sjr@debian.org> (Closes: #1108287)
+  * Apply 'wrap-and-sort -ast'
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Tue, 19 Aug 2025 22:48:42 +0200
+
 v4l2loopback (0.15.0-3) unstable; urgency=medium
 
   * Team Upload
