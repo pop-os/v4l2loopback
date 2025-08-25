@@ -1,3 +1,9 @@
+v4l2loopback (0.15.1-1pop1) jammy; urgency=medium
+
+  * Backport for Linux 6.15
+
+ -- Michael Murphy <michael@mmurphy.dev>  Mon, 25 Aug 2025 14:04:03 +0200
+
 v4l2loopback (0.15.1-1) unstable; urgency=medium
 
   * New upstream version 0.15.1
