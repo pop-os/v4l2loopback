@@ -1,3 +1,9 @@
+v4l2loopback (0.15.3-1ubuntu1pop1) jammy; urgency=medium
+
+  * Backport for Linux 6.18
+
+ -- Michael Murphy <michael@mmurphy.dev>  Fri, 23 Jan 2026 17:37:07 +0100
+
 v4l2loopback (0.15.3-1ubuntu1) resolute; urgency=medium
 
   * Merge from Debian unstable. Remaining changes:
