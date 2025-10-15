@@ -1,3 +1,12 @@
+v4l2loopback (0.15.2-1) unstable; urgency=medium
+
+  * New upstream version 0.15.2 (Closes: #1118164)
+    + Drop obsolete patches
+  * Drop obsolete Rules-Requires-Root stanza.
+  * Update d/watch to version 5
+
+ -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Wed, 15 Oct 2025 20:09:48 +0200
+
 v4l2loopback (0.15.1-1) unstable; urgency=medium
 
   * New upstream version 0.15.1
