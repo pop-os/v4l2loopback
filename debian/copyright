@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: v4l2loopback
 Upstream-Contact: IOhannes m zmölnig <zmoelnig@umlaeute.mur.at>
-Source: https://github.com/umlaeute/v4l2loopback/
+Source: https://github.com/v4l2loopback/v4l2loopback/
 License: GPL-2+
 
 Files: *
