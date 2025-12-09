@@ -1,0 +1,45 @@
+From: You-Sheng Yang <vicamo@gmail.com>
+Date: Wed, 4 Sep 2024 16:49:16 +0800
+Subject: v4l2loopback: backward compatibility for v4l2-relayd
+
+Before the client usage event was included in upstream and assigned a
+new v4l2loopback-specific event ID range, the v4l2-relayd is already
+using it with a different event ID. To keep backward compatibility with
+all the existing installations, the event is queued twice with both IDs,
+and either or both maybe ignored by kernel V4L2 API if not subscribed.
+
+Bug-Ubuntu: https://bugs.launchpad.net/bugs/2078947
+Signed-off-by: You-Sheng Yang <vicamo@gmail.com>
+---
+ v4l2loopback.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+--- a/v4l2loopback.c
++++ b/v4l2loopback.c
+@@ -800,6 +800,7 @@ static void v4l2loopback_create_sysfs(st
+ #define V4L2LOOPBACK_EVENT_OFFSET 0x08E00000
+ #define V4L2_EVENT_PRI_CLIENT_USAGE \
+ 	(V4L2LOOPBACK_EVENT_BASE + V4L2LOOPBACK_EVENT_OFFSET + 1)
++#define V4L2_EVENT_PRI_CLIENT_USAGE_UBUNTU V4L2_EVENT_PRIVATE_START
+ 
+ struct v4l2_event_client_usage {
+ 	__u32 count;
+@@ -2114,6 +2115,10 @@ static void client_usage_queue_event(str
+ 		!has_capture_token(dev->stream_tokens);
+ 
+ 	v4l2_event_queue(vdev, &ev);
++
++	// Backward compatibility for v4l2-relayd
++	ev.type = V4L2_EVENT_PRI_CLIENT_USAGE_UBUNTU;
++	v4l2_event_queue(vdev, &ev);
+ }
+ 
+ static int client_usage_ops_add(struct v4l2_subscribed_event *sev,
+@@ -2153,6 +2158,7 @@ static int vidioc_subscribe_event(struct
+ 	case V4L2_EVENT_CTRL:
+ 		return v4l2_ctrl_subscribe_event(fh, sub);
+ 	case V4L2_EVENT_PRI_CLIENT_USAGE:
++	case V4L2_EVENT_PRI_CLIENT_USAGE_UBUNTU:
+ 		return v4l2_event_subscribe(fh, sub, 0, &client_usage_ops);
+ 	}
+ 

@@ -1,7 +1,8 @@
 Source: v4l2loopback
 Section: kernel
 Priority: optional
-Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
+Maintainer: Ubuntu Developers <ubuntu-devel-discuss@lists.ubuntu.com>
+XSBC-Original-Maintainer: IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>
 Build-Depends:
  debhelper-compat (= 13),
  help2man <!cross>,

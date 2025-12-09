@@ -1,3 +1,12 @@
+v4l2loopback (0.15.3-1ubuntu1) resolute; urgency=medium
+
+  * Merge from Debian unstable. Remaining changes:
+    - v4l2loopback: backward compatibility for v4l2-relayd
+  * New upstream release (Closes: #2130335)
+    - drop already applied 0002-Drop-from_timer-macro-usage.patch
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Tue, 09 Dec 2025 14:29:06 +0800
+
 v4l2loopback (0.15.3-1) unstable; urgency=medium
 
   * New upstream version 0.15.3
@@ -47,6 +56,22 @@ v4l2loopback (0.15.0-1) unstable; urgency=medium
 
  -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Thu, 05 Jun 2025 09:55:40 +0200
 
+v4l2loopback (0.15.0-0ubuntu2) questing; urgency=medium
+
+  * Failed to build against linux-6.16 (LP: #2114259)
+    - 0002-Drop-from_timer-macro-usage.patch
+
+ -- You-Sheng Yang <vicamo@gmail.com>  Mon, 16 Jun 2025 12:12:19 +0800
+
+v4l2loopback (0.15.0-0ubuntu1) questing; urgency=low
+
+  * Merge from Debian unstable. Remaining changes:
+    - v4l2loopback: backward compatibility for v4l2-relayd
+  * New upstream release
+    - drop dkms.conf.patch, upstream
+
+ -- Ubuntu Merge-o-Matic <mom@ubuntu.com>  Sat, 15 Mar 2025 05:29:30 +0000
+
 v4l2loopback (0.14.0-1) unstable; urgency=medium
 
   * New upstream version 0.14.0
@@ -70,6 +95,13 @@ v4l2loopback (0.14.0-1) unstable; urgency=medium
   * Bump standards version to 4.7.2
 
  -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Fri, 14 Mar 2025 20:54:00 +0100
+
+v4l2loopback (0.13.2-1ubuntu1) oracular; urgency=medium
+
+  * Merge from Debian (LP: #2078947), remaining changes:
+    - v4l2loopback: backward compatibility for v4l2-relayd
+
+ -- You-Sheng Yang <vicamo.yano@canonical.com>  Mon, 02 Sep 2024 18:26:32 +0800
 
 v4l2loopback (0.13.2-1) unstable; urgency=medium
 
@@ -101,6 +133,45 @@ v4l2loopback (0.13.1-1) unstable; urgency=medium
 
  -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Wed, 20 Mar 2024 10:08:55 +0100
 
+v4l2loopback (0.12.7-2ubuntu5) noble; urgency=medium
+
+  * Support Linux 6.8 (LP: #2052801):
+    - debian/patches/0008-handle-strlcpy.patch
+
+ -- Andrea Righi <andrea.righi@canonical.com>  Fri, 09 Feb 2024 14:25:38 +0000
+
+v4l2loopback (0.12.7-2ubuntu4) mantic; urgency=medium
+
+  * Fix wrong income frame length. (LP: #2025204)
+    - v4l2loopback: Fixup bytesused field when writer sends a too large value
+
+ -- You-Sheng Yang <vicamo.yano@canonical.com>  Wed, 05 Jul 2023 14:05:05 +0200
+
+v4l2loopback (0.12.7-2ubuntu3) lunar; urgency=medium
+
+  * Revert to 0.12.7-2ubuntu1, as dkms that unconditionaly exports CC has
+    been reverted. Otherwise, currently src:linux FTBFS when trying to
+    vendor in this module. LP: #2015279
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Tue, 04 Apr 2023 17:41:18 +0100
+
+v4l2loopback (0.12.7-2ubuntu2) kinetic; urgency=medium
+
+  * Preserve CC setting when invoking sub-make, to ensure module can be
+    built correctly with the kernel's custom compiler. Fixes FTBFS in
+    hwe-5.19 build. LP: #1991664
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Thu, 06 Oct 2022 15:01:47 +0100
+
+v4l2loopback (0.12.7-2ubuntu1) kinetic; urgency=medium
+
+  * Merge from Debian, remaining changes:
+    - drop module-assistant autopkgtest
+    - add Ubuntu patch track active-readers
+    - add Ubuntu patch implement support for V4L2_EVENT_PRI_CLIENT_USAGE
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Tue, 16 Aug 2022 16:36:31 +0100
+
 v4l2loopback (0.12.7-2) unstable; urgency=medium
 
   * Fix DKMS build on linux>=5.18
@@ -127,6 +198,63 @@ v4l2loopback (0.12.7-1) unstable; urgency=medium
   * Bump standards version to 4.6.1
 
  -- IOhannes m zmölnig (Debian/GNU) <umlaeute@debian.org>  Fri, 05 Aug 2022 00:47:27 +0200
+
+v4l2loopback (0.12.5-1ubuntu7) kinetic; urgency=medium
+
+  * Drop obsolte REMAKE_INITRD option from dkms.conf.
+  * Update module init & exit calls to use kernel provided macros, such
+    that they gain correct IBT attributes. LP: #1980484
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Mon, 11 Jul 2022 16:14:38 +0100
+
+v4l2loopback (0.12.5-1ubuntu6) kinetic; urgency=low
+
+  * Check CONFIG_VIDEO_DEV against kernel version >= 5.18. (LP: #1970983)
+
+ -- You-Sheng Yang <vicamo.yano@canonical.com>  Tue, 03 May 2022 03:55:33 +0000
+
+v4l2loopback (0.12.5-1ubuntu5) jammy; urgency=medium
+
+  * Drop manual and out of date dkms autopkgtests in favour of
+    automatically generated ones with autodep8. Unblocks migration of
+    linux-kvm kernel.
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Tue, 12 Apr 2022 09:30:03 +0100
+
+v4l2loopback (0.12.5-1ubuntu4) jammy; urgency=medium
+
+  * Only attempt building module for kernels that have CONFIG_VIDEO_V4L2
+    turned on. LP: #1968191
+
+ -- Dimitri John Ledkov <dimitri.ledkov@canonical.com>  Thu, 07 Apr 2022 16:37:40 +0100
+
+v4l2loopback (0.12.5-1ubuntu3) impish; urgency=medium
+
+  * Don't fail if allocating 0-sized buffers (LP: #1936250)
+
+ -- Erich Eickmeyer <eeickmeyer@ubuntu.com>  Thu, 29 Jul 2021 17:54:49 +0000
+
+v4l2loopback (0.12.5-1ubuntu2) impish; urgency=low
+
+  * Fix coverity errors. (LP: #1930208)
+
+ -- You-Sheng Yang <vicamo.yano@canonical.com>  Fri, 09 Jul 2021 18:08:29 +0800
+
+v4l2loopback (0.12.5-1ubuntu1) hirsute; urgency=medium
+
+  * Support client usage notification via V4l2 Event API (LP: #1921474)
+    - dev: initialize per opener v4l2_fh
+    - event: install event (un)subscribe hook
+    - event: support polling for events
+    - event: fix backward compatibility to 3.16
+    - UBUNTU: SAUCE: track active readers
+    - UBUNTU: SAUCE: event: support V4L2_EVENT_PRI_CLIENT_USAGE
+    - compliance: stop declaring V4L2_CAP_VIDEO_M2M capability
+    - compliance: fix vidioc_enum_frameintervals in output side
+    - compliance: fix enum frame sizes/intervals errors
+    - compliance: fix "fmtdesc.type was modified" error
+
+ -- You-Sheng Yang <vicamo.yano@canonical.com>  Mon, 29 Mar 2021 17:02:42 +0800
 
 v4l2loopback (0.12.5-1) unstable; urgency=medium
 
